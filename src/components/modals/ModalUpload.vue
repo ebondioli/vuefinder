@@ -362,11 +362,9 @@ onMounted(async () => {
   uppy.on('upload', async () => {
     const reqParams = buildReqParams();
     uppy.setMeta({ ...reqParams.body });
-
-    if (app.requester.config.xhrOptions.transformUploadFile) {
+    if (app.requester.config.xhrOptions.setUploadFileState) {
       uppy.getFiles().forEach(f => {
-        console.log(f)
-        uppy.setFileState(f.id, app.requester.config.xhrOptions.transformUploadFile(file, reqParams))
+        uppy.setFileState(f.id, app.requester.config.xhrOptions.setUploadFileState(f, reqParams))
       })
     }
 

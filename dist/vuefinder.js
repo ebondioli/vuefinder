@@ -2686,8 +2686,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         se(j), C.value = $.message;
       }), h.on("upload", async () => {
         const y = w();
-        h.setMeta({ ...y.body }), e.requester.config.xhrOptions.transformUploadFile && h.getFiles().forEach((j) => {
-          console.log(j), h.setFileState(j.id, e.requester.config.xhrOptions.transformUploadFile(file, y));
+        h.setMeta({ ...y.body }), e.requester.config.xhrOptions.setUploadFileState && h.getFiles().forEach((j) => {
+          h.setFileState(j.id, e.requester.config.xhrOptions.setUploadFileState(j, y));
         });
         const $ = h.getPlugin("XHRUpload");
         $.opts.method = y.method, $.opts.endpoint = y.url + "?" + new URLSearchParams(y.params), $.opts.headers = y.headers, D.value = !0, S.value.forEach((j) => {

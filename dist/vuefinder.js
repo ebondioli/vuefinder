@@ -1,7 +1,7 @@
 var Ce = Object.defineProperty;
 var Se = (p, e, s) => e in p ? Ce(p, e, { enumerable: !0, configurable: !0, writable: !0, value: s }) : p[e] = s;
 var fe = (p, e, s) => (Se(p, typeof e != "symbol" ? e + "" : e, s), s);
-import { reactive as le, watch as ie, ref as b, computed as Q, inject as F, openBlock as n, createElementBlock as u, unref as a, createCommentVNode as E, normalizeClass as N, createElementVNode as t, createTextVNode as T, toDisplayString as v, customRef as Me, withModifiers as G, Fragment as U, renderList as q, withDirectives as R, withKeys as J, isRef as _e, vModelText as X, nextTick as de, createVNode as B, TransitionGroup as Ee, withCtx as A, onMounted as I, onUpdated as De, onBeforeUnmount as ke, vShow as oe, normalizeStyle as ye, vModelSelect as pe, provide as je, Transition as Ae, createBlock as L, resolveDynamicComponent as Le, renderSlot as ne, onUnmounted as Fe, vModelCheckbox as Te } from "vue";
+import { reactive as le, watch as ie, ref as b, computed as Q, inject as F, openBlock as n, createElementBlock as c, unref as a, createCommentVNode as E, normalizeClass as N, createElementVNode as t, createTextVNode as T, toDisplayString as m, customRef as Me, withModifiers as G, Fragment as U, renderList as q, withDirectives as R, withKeys as J, isRef as _e, vModelText as X, nextTick as de, createVNode as B, TransitionGroup as Ee, withCtx as A, onMounted as I, onUpdated as De, onBeforeUnmount as ke, vShow as oe, normalizeStyle as ye, vModelSelect as pe, provide as je, Transition as Ae, createBlock as L, resolveDynamicComponent as Le, renderSlot as ne, onUnmounted as Fe, vModelCheckbox as Te } from "vue";
 import Oe from "mitt";
 import Ve from "dragselect";
 import Ne from "vanilla-lazyload";
@@ -36,29 +36,29 @@ class He {
   transformRequestParams(e) {
     const s = this.config, r = {};
     me != null && me !== "" && (r[s.xsrfHeaderName] = me);
-    const o = Object.assign({}, s.headers, r, e.headers), i = Object.assign({}, s.params, e.params), m = e.body, d = s.baseUrl + e.url, l = e.method;
-    let c;
-    l !== "get" && (m instanceof FormData ? (c = m, s.body != null && Object.entries(this.config.body).forEach(([_, S]) => {
-      c.append(_, S);
-    })) : (c = { ...m }, s.body != null && Object.assign(c, this.config.body)));
-    const g = {
+    const o = Object.assign({}, s.headers, r, e.headers), l = Object.assign({}, s.params, e.params), u = e.body, d = s.baseUrl + e.url, i = e.method;
+    let v;
+    i !== "get" && (u instanceof FormData ? (v = u, s.body != null && Object.entries(this.config.body).forEach(([f, S]) => {
+      v.append(f, S);
+    })) : (v = { ...u }, s.body != null && Object.assign(v, this.config.body)));
+    const h = {
       url: d,
-      method: l,
+      method: i,
       headers: o,
-      params: i,
-      body: c
+      params: l,
+      body: v
     };
     if (s.transformRequest != null) {
-      const _ = s.transformRequest({
+      const f = s.transformRequest({
         url: d,
-        method: l,
+        method: i,
         headers: o,
-        params: i,
-        body: c
+        params: l,
+        body: v
       });
-      _.url != null && (g.url = _.url), _.method != null && (g.method = _.method), _.params != null && (g.params = _.params ?? {}), _.headers != null && (g.headers = _.headers ?? {}), _.body != null && (g.body = _.body);
+      f.url != null && (h.url = f.url), f.method != null && (h.method = f.method), f.params != null && (h.params = f.params ?? {}), f.headers != null && (h.headers = f.headers ?? {}), f.body != null && (h.body = f.body);
     }
-    return g;
+    return h;
   }
   /**
    * Get download url
@@ -116,15 +116,15 @@ class He {
       method: e.method,
       headers: s.headers,
       signal: e.abortSignal
-    }, i = s.url + "?" + new URLSearchParams(s.params);
+    }, l = s.url + "?" + new URLSearchParams(s.params);
     if (s.method !== "get" && s.body != null) {
       let d;
       s.body instanceof FormData ? d = e.body : (d = JSON.stringify(s.body), o.headers["Content-Type"] = "application/json"), o.body = d;
     }
-    const m = await fetch(i, o);
-    if (m.ok)
-      return await m[r]();
-    throw await m.json();
+    const u = await fetch(l, o);
+    if (u.ok)
+      return await u[r]();
+    throw await u.json();
   }
 }
 function Re(p) {
@@ -145,35 +145,35 @@ function qe(p) {
   function r() {
     Object.keys(s).length ? localStorage.setItem(p + "_storage", JSON.stringify(s)) : localStorage.removeItem(p + "_storage");
   }
-  function o(l, c) {
-    s[l] = c;
+  function o(i, v) {
+    s[i] = v;
   }
-  function i(l) {
-    delete s[l];
+  function l(i) {
+    delete s[i];
   }
-  function m() {
-    Object.keys(s).map((l) => i(l));
+  function u() {
+    Object.keys(s).map((i) => l(i));
   }
-  return { getStore: (l, c = null) => s.hasOwnProperty(l) ? s[l] : c, setStore: o, removeStore: i, clearStore: m };
+  return { getStore: (i, v = null) => s.hasOwnProperty(i) ? s[i] : v, setStore: o, removeStore: l, clearStore: u };
 }
 async function Ie(p, e) {
   const s = e[p];
   return typeof s == "function" ? (await s()).default : s;
 }
 function Pe(p, e, s, r) {
-  const { getStore: o, setStore: i } = p, m = b({}), d = b(o("locale", e)), l = (_, S = e) => {
-    Ie(_, r).then((C) => {
-      m.value = C, i("locale", _), d.value = _, i("translations", C), Object.values(r).length > 1 && (s.emit("vf-toast-push", { label: "The language is set to " + _ }), s.emit("vf-language-saved"));
+  const { getStore: o, setStore: l } = p, u = b({}), d = b(o("locale", e)), i = (f, S = e) => {
+    Ie(f, r).then((C) => {
+      u.value = C, l("locale", f), d.value = f, l("translations", C), Object.values(r).length > 1 && (s.emit("vf-toast-push", { label: "The language is set to " + f }), s.emit("vf-language-saved"));
     }).catch((C) => {
-      S ? (s.emit("vf-toast-push", { label: "The selected locale is not yet supported!", type: "error" }), l(S, null)) : s.emit("vf-toast-push", { label: "Locale cannot be loaded!", type: "error" });
+      S ? (s.emit("vf-toast-push", { label: "The selected locale is not yet supported!", type: "error" }), i(S, null)) : s.emit("vf-toast-push", { label: "Locale cannot be loaded!", type: "error" });
     });
   };
-  !o("locale") && !r.length ? l(e) : m.value = o("translations");
-  const c = (_, ...S) => S.length ? c(_ = _.replace("%s", S.shift()), ...S) : _;
-  function g(_, ...S) {
-    return m.value && m.value.hasOwnProperty(_) ? c(m.value[_], ...S) : c(_, ...S);
+  !o("locale") && !r.length ? i(e) : u.value = o("translations");
+  const v = (f, ...S) => S.length ? v(f = f.replace("%s", S.shift()), ...S) : f;
+  function h(f, ...S) {
+    return u.value && u.value.hasOwnProperty(f) ? v(u.value[f], ...S) : v(f, ...S);
   }
-  return { t: g, changeLocale: l, locale: d };
+  return { t: h, changeLocale: i, locale: d };
 }
 const V = {
   EDIT: "edit",
@@ -208,10 +208,10 @@ const K = {
 function Ke(p, e) {
   const s = b(K.SYSTEM), r = b(K.LIGHT);
   s.value = p.getStore("theme", e ?? K.SYSTEM);
-  const o = window.matchMedia("(prefers-color-scheme: dark)"), i = (m) => {
-    s.value === K.DARK || s.value === K.SYSTEM && m.matches ? r.value = K.DARK : r.value = K.LIGHT;
+  const o = window.matchMedia("(prefers-color-scheme: dark)"), l = (u) => {
+    s.value === K.DARK || s.value === K.SYSTEM && u.matches ? r.value = K.DARK : r.value = K.LIGHT;
   };
-  return i(o), o.addEventListener("change", i), {
+  return l(o), o.addEventListener("change", l), {
     /**
      * @type {import('vue').Ref<Theme>}
      */
@@ -223,13 +223,13 @@ function Ke(p, e) {
     /**
      * @param {Theme} value
      */
-    set(m) {
-      s.value = m, m !== K.SYSTEM ? p.setStore("theme", m) : p.removeStore("theme"), i(o);
+    set(u) {
+      s.value = u, u !== K.SYSTEM ? p.setStore("theme", u) : p.removeStore("theme"), l(o);
     }
   };
 }
 const Je = (p, e) => {
-  const s = qe(p.id), r = Oe(), o = s.getStore("metricUnits", !1), i = Ke(s, p.theme), m = e.i18n, d = p.locale ?? e.locale, l = Q(() => Pe(s, d, r, m)), c = (_) => Array.isArray(_) ? _ : We, g = p.persist ? s.getStore("path", p.path) : p.path;
+  const s = qe(p.id), r = Oe(), o = s.getStore("metricUnits", !1), l = Ke(s, p.theme), u = e.i18n, d = p.locale ?? e.locale, i = Q(() => Pe(s, d, r, u)), v = (f) => Array.isArray(f) ? f : We, h = p.persist ? s.getStore("path", p.path) : p.path;
   return le({
     // app version
     version: Ge,
@@ -240,11 +240,11 @@ const Je = (p, e) => {
     // Event Bus
     emitter: r,
     // active features
-    features: c(p.features),
+    features: v(p.features),
     // http object
     requester: Re(p.request),
     // theme state
-    theme: i,
+    theme: l,
     // view state
     view: s.getStore("viewport", "grid"),
     // fullscreen state
@@ -260,7 +260,7 @@ const Je = (p, e) => {
     // loading state
     loading: !1,
     // default locale
-    i18n: l,
+    i18n: i,
     // modal state
     modal: {
       active: !1,
@@ -270,13 +270,13 @@ const Je = (p, e) => {
     // main storage adapter
     adapter: s.getStore("adapter"),
     // main storage adapter
-    path: g,
+    path: h,
     // persist state
     persist: p.persist,
     // storage
     storage: s,
     // fetched items
-    data: { adapter: s.getStore("adapter"), storages: [], dirname: g, files: [] },
+    data: { adapter: s.getStore("adapter"), storages: [], dirname: h, files: [] },
     // selected items
     selectedItems: []
   });
@@ -406,52 +406,59 @@ const Je = (p, e) => {
   name: "VFToolbar"
 }, Vt = /* @__PURE__ */ Object.assign(Ot, {
   setup(p) {
-    const e = F("ServiceContainer"), { setStore: s } = e.storage, { t: r } = e.i18n, o = b([]), i = b("");
-    e.emitter.on("vf-search-query", ({ newQuery: l }) => {
-      i.value = l;
+    const e = F("ServiceContainer"), { setStore: s } = e.storage, { t: r } = e.i18n, o = b([]), l = b("");
+    e.emitter.on("vf-search-query", ({ newQuery: v }) => {
+      l.value = v;
     });
-    const m = () => {
+    const u = () => {
       e.fullScreen = !e.fullScreen, s("full-screen", e.fullScreen), e.emitter.emit("vf-fullscreen-toggle");
     };
-    e.emitter.on("vf-nodes-selected", (l) => {
-      o.value = l;
+    e.emitter.on("vf-nodes-selected", (v) => {
+      o.value = v;
     });
-    const d = () => {
+    const d = (v) => {
+      switch (v.key) {
+        case "Delete":
+          return !o.value.length || e.emitter.emit("vf-modal-show", { type: "delete", items: o.value });
+      }
+    };
+    window.removeEventListener("keydown", d), window.addEventListener("keydown", d);
+    const i = () => {
       e.view = e.view === "list" ? "grid" : "list", s("viewport", e.view);
     };
-    return (l, c) => (n(), u("div", Xe, [
-      i.value.length ? (n(), u("div", yt, [
+    return (v, h) => (n(), c("div", Xe, [
+      l.value.length ? (n(), c("div", yt, [
         t("div", bt, [
-          T(v(a(r)("Search results for")) + " ", 1),
-          t("span", xt, v(i.value), 1)
+          T(m(a(r)("Search results for")) + " ", 1),
+          t("span", xt, m(l.value), 1)
         ]),
-        a(e).loading ? (n(), u("svg", wt, St)) : E("", !0)
-      ])) : (n(), u("div", Qe, [
-        a(e).features.includes(a(V).NEW_FOLDER) ? (n(), u("div", {
+        a(e).loading ? (n(), c("svg", wt, St)) : E("", !0)
+      ])) : (n(), c("div", Qe, [
+        a(e).features.includes(a(V).NEW_FOLDER) ? (n(), c("div", {
           key: 0,
           class: "mx-1.5",
           "aria-label": a(r)("New Folder"),
           "data-microtip-position": "bottom-right",
           role: "tooltip",
-          onClick: c[0] || (c[0] = (g) => a(e).emitter.emit("vf-modal-show", { type: "new-folder", items: o.value }))
+          onClick: h[0] || (h[0] = (f) => a(e).emitter.emit("vf-modal-show", { type: "new-folder", items: o.value }))
         }, tt, 8, Ze)) : E("", !0),
-        a(e).features.includes(a(V).NEW_FILE) ? (n(), u("div", {
+        a(e).features.includes(a(V).NEW_FILE) ? (n(), c("div", {
           key: 1,
           class: "mx-1.5",
           "aria-label": a(r)("New File"),
           "data-microtip-position": "bottom",
           role: "tooltip",
-          onClick: c[1] || (c[1] = (g) => a(e).emitter.emit("vf-modal-show", { type: "new-file", items: o.value }))
+          onClick: h[1] || (h[1] = (f) => a(e).emitter.emit("vf-modal-show", { type: "new-file", items: o.value }))
         }, ot, 8, st)) : E("", !0),
-        a(e).features.includes(a(V).RENAME) ? (n(), u("div", {
+        a(e).features.includes(a(V).RENAME) ? (n(), c("div", {
           key: 2,
           class: "mx-1.5",
           "aria-label": a(r)("Rename"),
           "data-microtip-position": "bottom",
           role: "tooltip",
-          onClick: c[2] || (c[2] = (g) => o.value.length != 1 || a(e).emitter.emit("vf-modal-show", { type: "rename", items: o.value }))
+          onClick: h[2] || (h[2] = (f) => o.value.length != 1 || a(e).emitter.emit("vf-modal-show", { type: "rename", items: o.value }))
         }, [
-          (n(), u("svg", {
+          (n(), c("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             class: N([o.value.length == 1 ? "cursor-pointer stroke-gray-500 hover:stroke-cyan-700 dark:stroke-gray-400 dark:hover:stroke-gray-300" : "stroke-gray-200  dark:stroke-gray-700", "h-6 w-6 md:h-8 md:w-8 m-auto"]),
             fill: "none",
@@ -460,15 +467,15 @@ const Je = (p, e) => {
             "stroke-width": "1.5"
           }, lt, 2))
         ], 8, rt)) : E("", !0),
-        a(e).features.includes(a(V).DELETE) ? (n(), u("div", {
+        a(e).features.includes(a(V).DELETE) ? (n(), c("div", {
           key: 3,
           class: "mx-1.5",
           "aria-label": a(r)("Delete"),
           "data-microtip-position": "bottom",
           role: "tooltip",
-          onClick: c[3] || (c[3] = (g) => !o.value.length || a(e).emitter.emit("vf-modal-show", { type: "delete", items: o.value }))
+          onClick: h[3] || (h[3] = (f) => !o.value.length || a(e).emitter.emit("vf-modal-show", { type: "delete", items: o.value }))
         }, [
-          (n(), u("svg", {
+          (n(), c("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             class: N([o.value.length ? "cursor-pointer stroke-gray-500 hover:stroke-cyan-700 dark:stroke-gray-400 dark:hover:stroke-gray-300" : "stroke-gray-200  dark:stroke-gray-700", "h-6 w-6 md:h-8 md:w-8 m-auto"]),
             fill: "none",
@@ -477,23 +484,23 @@ const Je = (p, e) => {
             "stroke-width": "1.5"
           }, ct, 2))
         ], 8, it)) : E("", !0),
-        a(e).features.includes(a(V).UPLOAD) ? (n(), u("div", {
+        a(e).features.includes(a(V).UPLOAD) ? (n(), c("div", {
           key: 4,
           class: "mx-1.5",
           "aria-label": a(r)("Upload"),
           "data-microtip-position": "bottom",
           role: "tooltip",
-          onClick: c[4] || (c[4] = (g) => a(e).emitter.emit("vf-modal-show", { type: "upload", items: o.value }))
+          onClick: h[4] || (h[4] = (f) => a(e).emitter.emit("vf-modal-show", { type: "upload", items: o.value }))
         }, vt, 8, ut)) : E("", !0),
-        a(e).features.includes(a(V).UNARCHIVE) && o.value.length == 1 && o.value[0].mime_type == "application/zip" ? (n(), u("div", {
+        a(e).features.includes(a(V).UNARCHIVE) && o.value.length == 1 && o.value[0].mime_type == "application/zip" ? (n(), c("div", {
           key: 5,
           class: "mx-1.5",
           "aria-label": a(r)("Unarchive"),
           "data-microtip-position": "bottom",
           role: "tooltip",
-          onClick: c[5] || (c[5] = (g) => !o.value.length || a(e).emitter.emit("vf-modal-show", { type: "unarchive", items: o.value }))
+          onClick: h[5] || (h[5] = (f) => !o.value.length || a(e).emitter.emit("vf-modal-show", { type: "unarchive", items: o.value }))
         }, [
-          (n(), u("svg", {
+          (n(), c("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             class: N([o.value.length ? "cursor-pointer stroke-gray-500 hover:stroke-cyan-700 dark:stroke-gray-400 dark:hover:stroke-gray-300" : "stroke-gray-200  dark:stroke-gray-700", "h-6 w-6 md:h-8 md:w-8 m-auto"]),
             fill: "none",
@@ -502,15 +509,15 @@ const Je = (p, e) => {
             "stroke-width": "1.5"
           }, ft, 2))
         ], 8, pt)) : E("", !0),
-        a(e).features.includes(a(V).ARCHIVE) ? (n(), u("div", {
+        a(e).features.includes(a(V).ARCHIVE) ? (n(), c("div", {
           key: 6,
           class: "mx-1.5",
           "aria-label": a(r)("Archive"),
           "data-microtip-position": "bottom",
           role: "tooltip",
-          onClick: c[6] || (c[6] = (g) => !o.value.length || a(e).emitter.emit("vf-modal-show", { type: "archive", items: o.value }))
+          onClick: h[6] || (h[6] = (f) => !o.value.length || a(e).emitter.emit("vf-modal-show", { type: "archive", items: o.value }))
         }, [
-          (n(), u("svg", {
+          (n(), c("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             class: N([o.value.length ? "cursor-pointer stroke-gray-500 hover:stroke-cyan-700 dark:stroke-gray-400 dark:hover:stroke-gray-300" : "stroke-gray-200  dark:stroke-gray-700", "h-6 w-6 md:h-8 md:w-8 m-auto"]),
             fill: "none",
@@ -521,16 +528,16 @@ const Je = (p, e) => {
         ], 8, gt)) : E("", !0)
       ])),
       t("div", Mt, [
-        a(e).features.includes(a(V).FULL_SCREEN) ? (n(), u("div", {
+        a(e).features.includes(a(V).FULL_SCREEN) ? (n(), c("div", {
           key: 0,
           class: "mx-1.5",
           "aria-label": a(r)("Toggle Full Screen"),
           "data-microtip-position": "bottom-left",
           role: "tooltip",
-          onClick: m
+          onClick: u
         }, [
-          (n(), u("svg", Dt, [
-            a(e).fullScreen ? (n(), u("path", jt)) : (n(), u("path", At))
+          (n(), c("svg", Dt, [
+            a(e).fullScreen ? (n(), c("path", jt)) : (n(), c("path", At))
           ]))
         ], 8, Et)) : E("", !0),
         t("div", {
@@ -538,18 +545,18 @@ const Je = (p, e) => {
           "aria-label": a(r)("Change View"),
           "data-microtip-position": "bottom-left",
           role: "tooltip",
-          onClick: c[7] || (c[7] = (g) => i.value.length || d())
+          onClick: h[7] || (h[7] = (f) => l.value.length || i())
         }, [
-          (n(), u("svg", {
+          (n(), c("svg", {
             xmlns: "http://www.w3.org/2000/svg",
-            class: N([i.value.length ? "stroke-gray-200  dark:stroke-gray-700" : "cursor-pointer stroke-gray-500 hover:stroke-cyan-700 dark:stroke-gray-400 dark:hover:stroke-gray-300", "h-6 w-6 md:h-8 md:w-8 m-auto"]),
+            class: N([l.value.length ? "stroke-gray-200  dark:stroke-gray-700" : "cursor-pointer stroke-gray-500 hover:stroke-cyan-700 dark:stroke-gray-400 dark:hover:stroke-gray-300", "h-6 w-6 md:h-8 md:w-8 m-auto"]),
             fill: "none",
             viewBox: "0 0 24 24",
             stroke: "none",
             "stroke-width": "1.5"
           }, [
-            a(e).view === "grid" ? (n(), u("path", Ft)) : E("", !0),
-            a(e).view === "list" ? (n(), u("path", Tt)) : E("", !0)
+            a(e).view === "grid" ? (n(), c("path", Ft)) : E("", !0),
+            a(e).view === "list" ? (n(), c("path", Tt)) : E("", !0)
           ], 2))
         ], 8, Lt)
       ])
@@ -564,13 +571,13 @@ const Je = (p, e) => {
   };
 }, Ut = (p, e, s) => {
   const r = b(p);
-  return Me((o, i) => ({
+  return Me((o, l) => ({
     get() {
       return o(), r.value;
     },
     set: Nt(
-      (m) => {
-        r.value = m, i();
+      (u) => {
+        r.value = u, l();
       },
       e,
       s
@@ -638,76 +645,76 @@ const Je = (p, e) => {
   name: "VFBreadcrumb"
 }, cs = /* @__PURE__ */ Object.assign(ds, {
   setup(p) {
-    const e = b(null), s = b([]), r = b(!1), o = b(null), i = F("ServiceContainer"), { t: m } = i.i18n;
-    i.emitter.on("vf-explorer-update", () => {
-      let M = [], h = [];
-      e.value = i.data.dirname ?? i.adapter + "://", e.value.length == 0 && (s.value = []), e.value.replace(i.adapter + "://", "").split("/").forEach(function(f) {
-        M.push(f), M.join("/") != "" && h.push({
-          basename: f,
-          name: f,
-          path: i.adapter + "://" + M.join("/"),
+    const e = b(null), s = b([]), r = b(!1), o = b(null), l = F("ServiceContainer"), { t: u } = l.i18n;
+    l.emitter.on("vf-explorer-update", () => {
+      let M = [], g = [];
+      e.value = l.data.dirname ?? l.adapter + "://", e.value.length == 0 && (s.value = []), e.value.replace(l.adapter + "://", "").split("/").forEach(function(_) {
+        M.push(_), M.join("/") != "" && g.push({
+          basename: _,
+          name: _,
+          path: l.adapter + "://" + M.join("/"),
           type: "dir"
         });
-      }), h.length > 4 && (h = h.slice(-5), h[0].name = ".."), s.value = h;
+      }), g.length > 4 && (g = g.slice(-5), g[0].name = ".."), s.value = g;
     });
     const d = () => {
-      r.value = !1, c.value = "";
+      r.value = !1, v.value = "";
     };
-    i.emitter.on("vf-search-exit", () => {
+    l.emitter.on("vf-search-exit", () => {
       d();
     });
-    const l = () => {
-      i.features.includes(V.SEARCH) && (r.value = !0, de(() => o.value.focus()));
-    }, c = Ut("", 400);
-    ie(c, (M) => {
-      i.emitter.emit("vf-toast-clear"), i.emitter.emit("vf-search-query", { newQuery: M });
+    const i = () => {
+      l.features.includes(V.SEARCH) && (r.value = !0, de(() => o.value.focus()));
+    }, v = Ut("", 400);
+    ie(v, (M) => {
+      l.emitter.emit("vf-toast-clear"), l.emitter.emit("vf-search-query", { newQuery: M });
     });
-    const g = () => s.value.length && !r.value, _ = (M, h = null) => {
-      M.preventDefault(), C(M), h ?? (h = s.value.length - 2);
-      let f = JSON.parse(M.dataTransfer.getData("items"));
-      if (f.find((O) => O.storage !== i.adapter)) {
+    const h = () => s.value.length && !r.value, f = (M, g = null) => {
+      M.preventDefault(), C(M), g ?? (g = s.value.length - 2);
+      let _ = JSON.parse(M.dataTransfer.getData("items"));
+      if (_.find((O) => O.storage !== l.adapter)) {
         alert("Moving items between different storages is not supported yet.");
         return;
       }
-      i.emitter.emit("vf-modal-show", {
+      l.emitter.emit("vf-modal-show", {
         type: "move",
-        items: { from: f, to: s.value[h] ?? { path: i.adapter + "://" } }
+        items: { from: _, to: s.value[g] ?? { path: l.adapter + "://" } }
       });
     }, S = (M) => {
-      M.preventDefault(), g() ? (M.dataTransfer.dropEffect = "copy", M.currentTarget.classList.add("bg-blue-200", "dark:bg-slate-500")) : (M.dataTransfer.dropEffect = "none", M.dataTransfer.effectAllowed = "none");
+      M.preventDefault(), h() ? (M.dataTransfer.dropEffect = "copy", M.currentTarget.classList.add("bg-blue-200", "dark:bg-slate-500")) : (M.dataTransfer.dropEffect = "none", M.dataTransfer.effectAllowed = "none");
     }, C = (M) => {
-      M.preventDefault(), M.currentTarget.classList.remove("bg-blue-200", "dark:bg-slate-500"), g() && M.currentTarget.classList.remove("bg-blue-200", "dark:bg-slate-500");
+      M.preventDefault(), M.currentTarget.classList.remove("bg-blue-200", "dark:bg-slate-500"), h() && M.currentTarget.classList.remove("bg-blue-200", "dark:bg-slate-500");
     }, D = () => {
-      c.value == "" && d();
+      v.value == "" && d();
     };
-    return (M, h) => (n(), u("div", Bt, [
+    return (M, g) => (n(), c("div", Bt, [
       t("span", {
-        "aria-label": a(m)("Go up a directory"),
+        "aria-label": a(u)("Go up a directory"),
         "data-microtip-position": "bottom-right",
         role: "tooltip"
       }, [
-        (n(), u("svg", {
-          onDragover: h[0] || (h[0] = (f) => S(f)),
-          onDragleave: h[1] || (h[1] = (f) => C(f)),
-          onDrop: h[2] || (h[2] = (f) => _(f)),
-          onClick: h[3] || (h[3] = (f) => {
+        (n(), c("svg", {
+          onDragover: g[0] || (g[0] = (_) => S(_)),
+          onDragleave: g[1] || (g[1] = (_) => C(_)),
+          onDrop: g[2] || (g[2] = (_) => f(_)),
+          onClick: g[3] || (g[3] = (_) => {
             var O;
-            return !g() || a(i).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(i).data.adapter, path: ((O = s.value[s.value.length - 2]) == null ? void 0 : O.path) ?? a(i).adapter + "://" } });
+            return !h() || a(l).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(l).data.adapter, path: ((O = s.value[s.value.length - 2]) == null ? void 0 : O.path) ?? a(l).adapter + "://" } });
           }),
-          class: N(["h-6 w-6 p-0.5 rounded", g() ? "text-slate-700 hover:bg-neutral-300 dark:text-neutral-200 dark:hover:bg-gray-700 cursor-pointer" : "text-gray-400 dark:text-neutral-500"]),
+          class: N(["h-6 w-6 p-0.5 rounded", h() ? "text-slate-700 hover:bg-neutral-300 dark:text-neutral-200 dark:hover:bg-gray-700 cursor-pointer" : "text-gray-400 dark:text-neutral-500"]),
           xmlns: "http://www.w3.org/2000/svg",
           viewBox: "0 0 20 20",
           fill: "currentColor"
         }, Rt, 34))
       ], 8, zt),
-      a(i).loading ? (n(), u("span", {
+      a(l).loading ? (n(), c("span", {
         key: 1,
-        "aria-label": a(m)("Cancel"),
+        "aria-label": a(u)("Cancel"),
         "data-microtip-position": "bottom-right",
         role: "tooltip"
       }, [
-        (n(), u("svg", {
-          onClick: h[5] || (h[5] = (f) => a(i).emitter.emit("vf-fetch-abort")),
+        (n(), c("svg", {
+          onClick: g[5] || (g[5] = (_) => a(l).emitter.emit("vf-fetch-abort")),
           xmlns: "http://www.w3.org/2000/svg",
           fill: "none",
           viewBox: "0 0 24 24",
@@ -715,15 +722,15 @@ const Je = (p, e) => {
           stroke: "currentColor",
           class: "h-6 w-6 p-1 rounded text-slate-700 hover:bg-neutral-300 dark:text-neutral-200 dark:hover:bg-gray-700 cursor-pointer"
         }, Yt))
-      ], 8, Wt)) : (n(), u("span", {
+      ], 8, Wt)) : (n(), c("span", {
         key: 0,
-        "aria-label": a(m)("Refresh"),
+        "aria-label": a(u)("Refresh"),
         "data-microtip-position": "bottom-right",
         role: "tooltip"
       }, [
-        (n(), u("svg", {
-          onClick: h[4] || (h[4] = (f) => {
-            a(i).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(i).data.adapter, path: a(i).data.dirname } });
+        (n(), c("svg", {
+          onClick: g[4] || (g[4] = (_) => {
+            a(l).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(l).data.adapter, path: a(l).data.dirname } });
           }),
           class: "h-6 w-6 p-1 rounded text-slate-700 hover:bg-neutral-300 dark:text-neutral-200 dark:hover:bg-gray-700 cursor-pointer",
           xmlns: "http://www.w3.org/2000/svg",
@@ -731,21 +738,21 @@ const Je = (p, e) => {
           fill: "currentColor"
         }, Pt))
       ], 8, qt)),
-      r.value ? (n(), u("div", os, [
+      r.value ? (n(), c("div", os, [
         rs,
         R(t("input", {
           ref_key: "searchInput",
           ref: o,
           onKeydown: J(d, ["esc"]),
           onBlur: D,
-          "onUpdate:modelValue": h[10] || (h[10] = (f) => _e(c) ? c.value = f : null),
-          placeholder: a(m)("Search anything.."),
+          "onUpdate:modelValue": g[10] || (g[10] = (_) => _e(v) ? v.value = _ : null),
+          placeholder: a(u)("Search anything.."),
           class: "w-full pb-0 px-1 border-0 text-base ring-0 outline-0 text-gray-600 focus:ring-transparent focus:border-transparent dark:focus:ring-transparent dark:focus:border-transparent dark:text-gray-300 bg-transparent",
           type: "text"
         }, null, 40, ns), [
-          [X, a(c)]
+          [X, a(v)]
         ]),
-        (n(), u("svg", {
+        (n(), c("svg", {
           class: "w-6 h-6 cursor-pointer",
           onClick: d,
           xmlns: "http://www.w3.org/2000/svg",
@@ -754,35 +761,35 @@ const Je = (p, e) => {
           "stroke-width": "1.5",
           stroke: "currentColor"
         }, is))
-      ])) : (n(), u("div", {
+      ])) : (n(), c("div", {
         key: 2,
         class: "group flex bg-white dark:bg-gray-700 items-center rounded p-1 ml-2 w-full",
-        onClick: G(l, ["self"])
+        onClick: G(i, ["self"])
       }, [
-        (n(), u("svg", {
-          onDragover: h[6] || (h[6] = (f) => S(f)),
-          onDragleave: h[7] || (h[7] = (f) => C(f)),
-          onDrop: h[8] || (h[8] = (f) => _(f, -1)),
-          onClick: h[9] || (h[9] = (f) => a(i).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(i).data.adapter } })),
+        (n(), c("svg", {
+          onDragover: g[6] || (g[6] = (_) => S(_)),
+          onDragleave: g[7] || (g[7] = (_) => C(_)),
+          onDrop: g[8] || (g[8] = (_) => f(_, -1)),
+          onClick: g[9] || (g[9] = (_) => a(l).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(l).data.adapter } })),
           class: "h-6 w-6 p-1 rounded text-slate-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-gray-800 cursor-pointer",
           xmlns: "http://www.w3.org/2000/svg",
           viewBox: "0 0 20 20",
           fill: "currentColor"
         }, Jt, 32)),
         t("div", Xt, [
-          (n(!0), u(U, null, q(s.value, (f, O) => (n(), u("div", { key: O }, [
+          (n(!0), c(U, null, q(s.value, (_, O) => (n(), c("div", { key: O }, [
             Qt,
             t("span", {
               onDragover: (z) => O === s.value.length - 1 || S(z),
               onDragleave: (z) => O === s.value.length - 1 || C(z),
-              onDrop: (z) => O === s.value.length - 1 || _(z, O),
+              onDrop: (z) => O === s.value.length - 1 || f(z, O),
               class: "px-1.5 py-1 text-slate-700 dark:text-slate-200 hover:bg-neutral-100 dark:hover:bg-gray-800 rounded cursor-pointer",
-              title: f.basename,
-              onClick: (z) => a(i).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(i).data.adapter, path: f.path } })
-            }, v(f.name), 41, Zt)
+              title: _.basename,
+              onClick: (z) => a(l).emitter.emit("vf-fetch", { params: { q: "index", adapter: a(l).data.adapter, path: _.path } })
+            }, m(_.name), 41, Zt)
           ]))), 128))
         ]),
-        a(i).loading ? (n(), u("svg", es, as)) : E("", !0)
+        a(l).loading ? (n(), c("svg", es, as)) : E("", !0)
       ]))
     ]));
   }
@@ -815,29 +822,29 @@ const Je = (p, e) => {
 }, re = /* @__PURE__ */ Object.assign(gs, {
   props: { direction: String },
   setup(p) {
-    return (e, s) => (n(), u("div", null, [
-      p.direction === "down" ? (n(), u("svg", us, vs)) : E("", !0),
-      p.direction === "up" ? (n(), u("svg", ps, fs)) : E("", !0)
+    return (e, s) => (n(), c("div", null, [
+      p.direction === "down" ? (n(), c("svg", us, vs)) : E("", !0),
+      p.direction === "up" ? (n(), c("svg", ps, fs)) : E("", !0)
     ]));
   }
 }), _s = ["onClick"], ks = {
   name: "VFToast.vue"
 }, ys = /* @__PURE__ */ Object.assign(ks, {
   setup(p) {
-    const e = F("ServiceContainer"), { getStore: s } = e.storage, r = b(s("full-screen", !1)), o = b([]), i = (l) => l === "error" ? "text-red-400 border-red-400 dark:text-red-300 dark:border-red-300" : "text-lime-600 border-lime-600 dark:text-lime-300 dark:border-lime-1300", m = (l) => {
-      o.value.splice(l, 1);
-    }, d = (l) => {
-      let c = o.value.findIndex((g) => g.id === l);
-      c !== -1 && m(c);
+    const e = F("ServiceContainer"), { getStore: s } = e.storage, r = b(s("full-screen", !1)), o = b([]), l = (i) => i === "error" ? "text-red-400 border-red-400 dark:text-red-300 dark:border-red-300" : "text-lime-600 border-lime-600 dark:text-lime-300 dark:border-lime-1300", u = (i) => {
+      o.value.splice(i, 1);
+    }, d = (i) => {
+      let v = o.value.findIndex((h) => h.id === i);
+      v !== -1 && u(v);
     };
     return e.emitter.on("vf-toast-clear", () => {
       o.value = [];
-    }), e.emitter.on("vf-toast-push", (l) => {
-      let c = (/* @__PURE__ */ new Date()).getTime().toString(36).concat(performance.now().toString(), Math.random().toString()).replace(/\./g, "");
-      l.id = c, o.value.push(l), setTimeout(() => {
-        d(c);
+    }), e.emitter.on("vf-toast-push", (i) => {
+      let v = (/* @__PURE__ */ new Date()).getTime().toString(36).concat(performance.now().toString(), Math.random().toString()).replace(/\./g, "");
+      i.id = v, o.value.push(i), setTimeout(() => {
+        d(v);
       }, 5e3);
-    }), (l, c) => (n(), u("div", {
+    }), (i, v) => (n(), c("div", {
       class: N([r.value.value ? "fixed" : "absolute", "bottom-0 max-w-fit flex flex-col bottom-0 left-1/2 -translate-x-1/2"])
     }, [
       B(Ee, {
@@ -846,11 +853,11 @@ const Je = (p, e) => {
         "leave-to-class": "opacity-0"
       }, {
         default: A(() => [
-          (n(!0), u(U, null, q(o.value, (g, _) => (n(), u("div", {
-            onClick: (S) => m(_),
-            key: g,
-            class: N([i(g.type), "inline-block mx-auto my-0.5 py-0.5 px-2 min-w-max bg-gray-50 dark:bg-gray-600 border text-xs sm:text-sm rounded cursor-pointer"])
-          }, v(g.label), 11, _s))), 128))
+          (n(!0), c(U, null, q(o.value, (h, f) => (n(), c("div", {
+            onClick: (S) => u(f),
+            key: h,
+            class: N([l(h.type), "inline-block mx-auto my-0.5 py-0.5 px-2 min-w-max bg-gray-50 dark:bg-gray-600 border text-xs sm:text-sm rounded cursor-pointer"])
+          }, m(h.label), 11, _s))), 128))
         ]),
         _: 1
       })
@@ -970,12 +977,12 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer"), { t: s } = e.i18n;
     e.storage;
-    const r = (w) => w == null ? void 0 : w.substring(0, 3), o = b(null), i = b(null), m = b(0), d = b(null), l = Math.floor(Math.random() * 2 ** 32), c = b("");
-    let g;
+    const r = (w) => w == null ? void 0 : w.substring(0, 3), o = b(null), l = b(null), u = b(0), d = b(null), i = Math.floor(Math.random() * 2 ** 32), v = b("");
+    let h;
     e.emitter.on("vf-fullscreen-toggle", () => {
       o.value.style.height = null;
     }), e.emitter.on("vf-search-query", ({ newQuery: w }) => {
-      c.value = w, w ? e.emitter.emit("vf-fetch", {
+      v.value = w, w ? e.emitter.emit("vf-fetch", {
         params: {
           q: "search",
           adapter: e.data.adapter,
@@ -987,13 +994,13 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         }
       }) : e.emitter.emit("vf-fetch", { params: { q: "index", adapter: e.data.adapter, path: e.data.dirname } });
     });
-    let _ = null;
+    let f = null;
     const S = () => {
-      _ && clearTimeout(_);
+      f && clearTimeout(f);
     }, C = b(!0), D = (w) => {
       w.touches.length > 1 && (C.value ? (d.value.stop(), e.emitter.emit("vf-toast-push", { label: s("Drag&Drop: off") })) : (d.value.start(), e.emitter.emit("vf-toast-push", { label: s("Drag&Drop: on") }), e.emitter.emit("vf-explorer-update")), C.value = !C.value);
     }, M = (w) => {
-      _ = setTimeout(() => {
+      f = setTimeout(() => {
         const x = new MouseEvent("contextmenu", {
           bubbles: !0,
           cancelable: !1,
@@ -1005,20 +1012,20 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         });
         w.target.dispatchEvent(x);
       }, 500);
-    }, h = (w) => {
+    }, g = (w) => {
       w.type === "dir" ? (e.emitter.emit("vf-search-exit"), e.emitter.emit("vf-fetch", { params: { q: "index", adapter: e.data.adapter, path: w.path } })) : e.emitter.emit("vf-modal-show", { type: "preview", adapter: e.data.adapter, item: w });
-    }, f = le({ active: !1, column: "", order: "" }), O = (w = !0) => {
-      let x = [...e.data.files], k = f.column, y = f.order == "asc" ? 1 : -1;
+    }, _ = le({ active: !1, column: "", order: "" }), O = (w = !0) => {
+      let x = [...e.data.files], k = _.column, y = _.order == "asc" ? 1 : -1;
       if (!w)
         return x;
       const $ = (j, H) => typeof j == "string" && typeof H == "string" ? j.toLowerCase().localeCompare(H.toLowerCase()) : j < H ? -1 : j > H ? 1 : 0;
-      return f.active && (x = x.slice().sort((j, H) => $(j[k], H[k]) * y)), x;
+      return _.active && (x = x.slice().sort((j, H) => $(j[k], H[k]) * y)), x;
     }, z = (w) => {
-      f.active && f.column == w ? (f.active = f.order == "asc", f.column = w, f.order = "desc") : (f.active = !0, f.column = w, f.order = "asc");
+      _.active && _.column == w ? (_.active = _.order == "asc", _.column = w, _.order = "desc") : (_.active = !0, _.column = w, _.order = "asc");
     }, Y = () => d.value.getSelection().map((w) => JSON.parse(w.dataset.item)), Z = (w, x) => {
       if (w.altKey || w.ctrlKey || w.metaKey)
         return w.preventDefault(), !1;
-      w.dataTransfer.setDragImage(i.value, 0, 15), w.dataTransfer.effectAllowed = "all", w.dataTransfer.dropEffect = "copy", w.dataTransfer.setData("items", JSON.stringify(Y()));
+      w.dataTransfer.setDragImage(l.value, 0, 15), w.dataTransfer.effectAllowed = "all", w.dataTransfer.dropEffect = "copy", w.dataTransfer.setData("items", JSON.stringify(Y()));
     }, ee = (w, x) => {
       w.preventDefault();
       let k = JSON.parse(w.dataTransfer.getData("items"));
@@ -1037,11 +1044,11 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         selectorClass: "vf-explorer-selector"
       }), e.emitter.on("vf-explorer-update", () => de(() => {
         d.value.clearSelection(), d.value.setSettings({
-          selectables: document.getElementsByClassName("vf-item-" + l)
+          selectables: document.getElementsByClassName("vf-item-" + i)
         });
       })), d.value.subscribe("predragstart", ({ event: w, isDragging: x }) => {
         if (x)
-          m.value = d.value.getSelection().length, d.value.break();
+          u.value = d.value.getSelection().length, d.value.break();
         else {
           const k = w.target.offsetWidth - w.offsetX, y = w.target.offsetHeight - w.offsetY;
           k < 15 && y < 15 && (d.value.clearSelection(), d.value.break());
@@ -1049,7 +1056,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       }), d.value.subscribe("predragmove", ({ isDragging: w }) => {
         w && d.value.break();
       }), d.value.subscribe("callback", ({ items: w, event: x, isDragging: k }) => {
-        e.emitter.emit("vf-nodes-selected", Y()), m.value = d.value.getSelection().length;
+        e.emitter.emit("vf-nodes-selected", Y()), u.value = d.value.getSelection().length;
       });
     };
     function ae(w) {
@@ -1059,71 +1066,71 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       console.log(w), w.target.pause(), w.target.currentTime = 0;
     }
     return I(() => {
-      g = new Ne(o.value), se();
+      h = new Ne(o.value), se();
     }), De(() => {
-      d.value.Area.reset(), d.value.SelectorArea.updatePos(), g.update();
+      d.value.Area.reset(), d.value.SelectorArea.updatePos(), h.update();
     }), I(() => {
       ie(() => e.view, () => e.emitter.emit("vf-explorer-update"));
     }), ke(() => {
-      g.destroy();
-    }), (w, x) => (n(), u("div", bs, [
-      a(e).view == "list" || c.value.length ? (n(), u("div", xs, [
+      h.destroy();
+    }), (w, x) => (n(), c("div", bs, [
+      a(e).view == "list" || v.value.length ? (n(), c("div", xs, [
         t("div", {
           onClick: x[0] || (x[0] = (k) => z("basename")),
           class: "col-span-7 py-1 leading-6 hover:bg-neutral-100 bg-neutral-50 dark:bg-gray-800 dark:hover:bg-gray-700/10 flex items-center pl-1"
         }, [
-          T(v(a(s)("Name")) + " ", 1),
+          T(m(a(s)("Name")) + " ", 1),
           R(B(re, {
-            direction: f.order == "asc" ? "down" : "up"
+            direction: _.order == "asc" ? "down" : "up"
           }, null, 8, ["direction"]), [
-            [oe, f.active && f.column == "basename"]
+            [oe, _.active && _.column == "basename"]
           ])
         ]),
-        c.value.length ? E("", !0) : (n(), u("div", {
+        v.value.length ? E("", !0) : (n(), c("div", {
           key: 0,
           onClick: x[1] || (x[1] = (k) => z("file_size")),
           class: "col-span-2 py-1 leading-6 hover:bg-neutral-100 bg-neutral-50 dark:bg-gray-800 dark:hover:bg-gray-700/10 flex items-center justify-center border-l border-r dark:border-gray-700"
         }, [
-          T(v(a(s)("Size")) + " ", 1),
+          T(m(a(s)("Size")) + " ", 1),
           R(B(re, {
-            direction: f.order == "asc" ? "down" : "up"
+            direction: _.order == "asc" ? "down" : "up"
           }, null, 8, ["direction"]), [
-            [oe, f.active && f.column == "file_size"]
+            [oe, _.active && _.column == "file_size"]
           ])
         ])),
-        c.value.length ? E("", !0) : (n(), u("div", {
+        v.value.length ? E("", !0) : (n(), c("div", {
           key: 1,
           onClick: x[2] || (x[2] = (k) => z("last_modified")),
           class: "col-span-3 py-1 leading-6 hover:bg-neutral-100 bg-neutral-50 dark:bg-gray-800 dark:hover:bg-gray-700/10 flex items-center justify-center"
         }, [
-          T(v(a(s)("Date")) + " ", 1),
+          T(m(a(s)("Date")) + " ", 1),
           R(B(re, {
-            direction: f.order == "asc" ? "down" : "up"
+            direction: _.order == "asc" ? "down" : "up"
           }, null, 8, ["direction"]), [
-            [oe, f.active && f.column == "last_modified"]
+            [oe, _.active && _.column == "last_modified"]
           ])
         ])),
-        c.value.length ? (n(), u("div", {
+        v.value.length ? (n(), c("div", {
           key: 2,
           onClick: x[3] || (x[3] = (k) => z("path")),
           class: "col-span-5 py-1 leading-6 hover:bg-neutral-100 bg-neutral-50 dark:bg-gray-800 dark:hover:bg-gray-700/10 flex items-center justify-center border-l dark:border-gray-700"
         }, [
-          T(v(a(s)("Filepath")) + " ", 1),
+          T(m(a(s)("Filepath")) + " ", 1),
           R(B(re, {
-            direction: f.order == "asc" ? "down" : "up"
+            direction: _.order == "asc" ? "down" : "up"
           }, null, 8, ["direction"]), [
-            [oe, f.active && f.column == "path"]
+            [oe, _.active && _.column == "path"]
           ])
         ])) : E("", !0)
       ])) : E("", !0),
       t("div", ws, [
         t("div", {
           ref_key: "dragImage",
-          ref: i,
+          ref: l,
           class: "absolute -z-50 -top-96"
         }, [
           $s,
-          t("div", Cs, v(m.value), 1)
+          t("div", Cs, m(u.value), 1)
         ], 512)
       ]),
       t("div", {
@@ -1133,69 +1140,69 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         ref_key: "selectorArea",
         ref: o
       }, [
-        c.value.length ? (n(!0), u(U, { key: 0 }, q(O(), (k, y) => (n(), u("div", {
-          onDblclick: ($) => h(k),
+        v.value.length ? (n(!0), c(U, { key: 0 }, q(O(), (k, y) => (n(), c("div", {
+          onDblclick: ($) => g(k),
           onTouchstart: x[4] || (x[4] = ($) => M($)),
           onTouchend: x[5] || (x[5] = ($) => S()),
           onContextmenu: G(($) => a(e).emitter.emit("vf-contextmenu-show", { event: $, area: o.value, items: Y(), target: k }), ["prevent"]),
-          class: N(["vf-item-" + a(l), "grid grid-cols-1 border hover:bg-neutral-50 dark:hover:bg-gray-700 border-transparent my-0.5 w-full select-none"]),
+          class: N(["vf-item-" + a(i), "grid grid-cols-1 border hover:bg-neutral-50 dark:hover:bg-gray-700 border-transparent my-0.5 w-full select-none"]),
           "data-type": k.type,
           "data-item": JSON.stringify(k),
           "data-index": y
         }, [
           t("div", Ms, [
             t("div", Es, [
-              k.type === "dir" ? (n(), u("svg", Ds, As)) : (n(), u("svg", Ls, Ts)),
-              t("span", Os, v(k.basename), 1)
+              k.type === "dir" ? (n(), c("svg", Ds, As)) : (n(), c("svg", Ls, Ts)),
+              t("span", Os, m(k.basename), 1)
             ]),
-            t("div", Vs, v(k.path), 1)
+            t("div", Vs, m(k.path), 1)
           ])
         ], 42, Ss))), 256)) : E("", !0),
-        a(e).view === "list" && !c.value.length ? (n(!0), u(U, { key: 1 }, q(O(), (k, y) => (n(), u("div", {
+        a(e).view === "list" && !v.value.length ? (n(!0), c(U, { key: 1 }, q(O(), (k, y) => (n(), c("div", {
           draggable: "true",
-          onDblclick: ($) => h(k),
+          onDblclick: ($) => g(k),
           onTouchstart: x[6] || (x[6] = ($) => M($)),
           onTouchend: x[7] || (x[7] = ($) => S()),
           onContextmenu: G(($) => a(e).emitter.emit("vf-contextmenu-show", { event: $, area: o.value, items: Y(), target: k }), ["prevent"]),
           onDragstart: ($) => Z($),
           onDragover: ($) => te($, k),
           onDrop: ($) => ee($, k),
-          class: N(["vf-item-" + a(l), "grid grid-cols-1 border hover:bg-neutral-50 dark:hover:bg-gray-700 border-transparent my-0.5 w-full select-none"]),
+          class: N(["vf-item-" + a(i), "grid grid-cols-1 border hover:bg-neutral-50 dark:hover:bg-gray-700 border-transparent my-0.5 w-full select-none"]),
           "data-type": k.type,
           "data-item": JSON.stringify(k),
           "data-index": y
         }, [
           t("div", Us, [
             t("div", Bs, [
-              k.type === "dir" ? (n(), u("svg", zs, Rs)) : (n(), u("svg", qs, Ps)),
-              t("span", Ws, v(k.basename), 1)
+              k.type === "dir" ? (n(), c("svg", zs, Rs)) : (n(), c("svg", qs, Ps)),
+              t("span", Ws, m(k.basename), 1)
             ]),
-            t("div", Gs, v(k.file_size ? a(e).filesize(k.file_size) : ""), 1),
-            t("div", Ys, v(a(we)(k.last_modified)), 1)
+            t("div", Gs, m(k.file_size ? a(e).filesize(k.file_size) : ""), 1),
+            t("div", Ys, m(a(we)(k.last_modified)), 1)
           ])
         ], 42, Ns))), 256)) : E("", !0),
-        a(e).view === "grid" && !c.value.length ? (n(!0), u(U, { key: 2 }, q(O(!1), (k, y) => (n(), u("div", {
+        a(e).view === "grid" && !v.value.length ? (n(!0), c(U, { key: 2 }, q(O(!1), (k, y) => (n(), c("div", {
           draggable: "true",
-          onDblclick: ($) => h(k),
+          onDblclick: ($) => g(k),
           onTouchstart: x[8] || (x[8] = ($) => M($)),
           onTouchend: x[9] || (x[9] = ($) => S()),
           onContextmenu: G(($) => a(e).emitter.emit("vf-contextmenu-show", { event: $, area: o.value, items: Y(), target: k }), ["prevent"]),
           onDragstart: ($) => Z($),
           onDragover: ($) => te($, k),
           onDrop: ($) => ee($, k),
-          class: N(["vf-item-" + a(l), "border border-transparent hover:bg-neutral-50 m-1 dark:hover:bg-gray-700 inline-flex w-[5.5rem] h-20 md:w-24 text-center justify-center select-none"]),
+          class: N(["vf-item-" + a(i), "border border-transparent hover:bg-neutral-50 m-1 dark:hover:bg-gray-700 inline-flex w-[5.5rem] h-20 md:w-24 text-center justify-center select-none"]),
           "data-type": k.type,
           "data-item": JSON.stringify(k),
           "data-index": y
         }, [
           t("div", null, [
             t("div", Js, [
-              k.type === "dir" ? (n(), u("svg", Xs, Zs)) : (k.mime_type ?? "").startsWith("image") ? (n(), u("img", {
+              k.type === "dir" ? (n(), c("svg", Xs, Zs)) : (k.mime_type ?? "").startsWith("image") ? (n(), c("img", {
                 key: 1,
                 class: "lazy h-10 md:h-12 m-auto",
                 "data-src": a(e).requester.getPreviewUrl(a(e).adapter, k),
                 alt: k.basename
-              }, null, 8, ea)) : (k.mime_type ?? "").startsWith("video") ? (n(), u("video", {
+              }, null, 8, ea)) : (k.mime_type ?? "").startsWith("video") ? (n(), c("video", {
                 key: 2,
                 muted: "",
                 loop: "",
@@ -1208,10 +1215,10 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
                   src: a(e).requester.getPreviewUrl(a(e).adapter, k),
                   type: "video/mp4"
                 }, null, 8, sa)
-              ], 40, ta)) : (n(), u("svg", aa, ra)),
-              !(k.mime_type ?? "").startsWith("image") && k.type != "dir" ? (n(), u("div", na, v(r(k.extension)), 1)) : E("", !0)
+              ], 40, ta)) : (n(), c("svg", aa, ra)),
+              !(k.mime_type ?? "").startsWith("image") && k.type != "dir" ? (n(), c("div", na, m(r(k.extension)), 1)) : E("", !0)
             ]),
-            t("span", la, v(a(he)(k.basename)), 1)
+            t("span", la, m(a(he)(k.basename)), 1)
           ])
         ], 42, Ks))), 256)) : E("", !0)
       ], 34),
@@ -1222,18 +1229,18 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   name: "VFContextMenu"
 }, ha = /* @__PURE__ */ Object.assign(pa, {
   setup(p) {
-    const e = F("ServiceContainer"), { t: s } = e.i18n, r = b(null), o = b([]), i = b(""), m = le({
+    const e = F("ServiceContainer"), { t: s } = e.i18n, r = b(null), o = b([]), l = b(""), u = le({
       active: !1,
       items: [],
       positions: {
         left: 0,
         top: 0
       }
-    }), d = Q(() => m.items.filter((_) => _.key == null || e.features.includes(_.key)));
-    e.emitter.on("vf-context-selected", (_) => {
-      o.value = _;
+    }), d = Q(() => u.items.filter((f) => f.key == null || e.features.includes(f.key)));
+    e.emitter.on("vf-context-selected", (f) => {
+      o.value = f;
     });
-    const l = {
+    const i = {
       newfolder: {
         key: V.NEW_FOLDER,
         title: () => s("New Folder"),
@@ -1278,8 +1285,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         link: Q(() => e.requester.getDownloadUrl(e.data.adapter, o.value[0])),
         title: () => s("Download"),
         action: () => {
-          const _ = e.requester.getDownloadUrl(e.data.adapter, o.value[0]);
-          e.emitter.emit("vf-download", _);
+          const f = e.requester.getDownloadUrl(e.data.adapter, o.value[0]);
+          e.emitter.emit("vf-download", f);
         }
       },
       archive: {
@@ -1303,56 +1310,56 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           e.emitter.emit("vf-modal-show", { type: "rename", items: o });
         }
       }
-    }, c = (_) => {
-      e.emitter.emit("vf-contextmenu-hide"), _.action();
+    }, v = (f) => {
+      e.emitter.emit("vf-contextmenu-hide"), f.action();
     };
-    e.emitter.on("vf-search-query", ({ newQuery: _ }) => {
-      i.value = _;
-    }), e.emitter.on("vf-contextmenu-show", ({ event: _, area: S, items: C, target: D = null }) => {
-      if (m.items = [], i.value)
+    e.emitter.on("vf-search-query", ({ newQuery: f }) => {
+      l.value = f;
+    }), e.emitter.on("vf-contextmenu-show", ({ event: f, area: S, items: C, target: D = null }) => {
+      if (u.items = [], l.value)
         if (D)
-          m.items.push(l.openDir), e.emitter.emit("vf-context-selected", [D]);
+          u.items.push(i.openDir), e.emitter.emit("vf-context-selected", [D]);
         else
           return;
       else
-        !D && !i.value ? (m.items.push(l.refresh), m.items.push(l.newfolder), e.emitter.emit("vf-context-selected", [])) : C.length > 1 && C.some((M) => M.path === D.path) ? (m.items.push(l.refresh), m.items.push(l.archive), m.items.push(l.delete), e.emitter.emit("vf-context-selected", C)) : (D.type == "dir" ? m.items.push(l.open) : (m.items.push(l.preview), m.items.push(l.download)), m.items.push(l.rename), D.mime_type == "application/zip" ? m.items.push(l.unarchive) : m.items.push(l.archive), m.items.push(l.delete), e.emitter.emit("vf-context-selected", [D]));
-      g(_, S);
+        !D && !l.value ? (u.items.push(i.refresh), u.items.push(i.newfolder), e.emitter.emit("vf-context-selected", [])) : C.length > 1 && C.some((M) => M.path === D.path) ? (u.items.push(i.refresh), u.items.push(i.archive), u.items.push(i.delete), e.emitter.emit("vf-context-selected", C)) : (D.type == "dir" ? u.items.push(i.open) : (u.items.push(i.preview), u.items.push(i.download)), u.items.push(i.rename), D.mime_type == "application/zip" ? u.items.push(i.unarchive) : u.items.push(i.archive), u.items.push(i.delete), e.emitter.emit("vf-context-selected", [D]));
+      h(f, S);
     }), e.emitter.on("vf-contextmenu-hide", () => {
-      m.active = !1;
+      u.active = !1;
     });
-    const g = (_, S) => {
-      m.active = !0, de(() => {
+    const h = (f, S) => {
+      u.active = !0, de(() => {
         const C = e.root.getBoundingClientRect(), D = S.getBoundingClientRect();
-        let M = _.pageX - C.left, h = _.pageY - C.top, f = r.value.offsetHeight, O = r.value.offsetWidth;
-        M = D.right - _.pageX + window.scrollX < O ? M - O : M, h = D.bottom - _.pageY + window.scrollY < f ? h - f : h, m.positions = {
+        let M = f.pageX - C.left, g = f.pageY - C.top, _ = r.value.offsetHeight, O = r.value.offsetWidth;
+        M = D.right - f.pageX + window.scrollX < O ? M - O : M, g = D.bottom - f.pageY + window.scrollY < _ ? g - _ : g, u.positions = {
           left: M + "px",
-          top: h + "px"
+          top: g + "px"
         };
       });
     };
-    return (_, S) => m.active ? (n(), u("ul", {
+    return (f, S) => u.active ? (n(), c("ul", {
       key: 0,
       class: "z-30 absolute text-xs bg-neutral-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-neutral-300 dark:border-gray-600 shadow rounded select-none",
       ref_key: "contextmenu",
       ref: r,
-      style: ye(m.positions)
+      style: ye(u.positions)
     }, [
-      (n(!0), u(U, null, q(d.value, (C) => (n(), u("li", {
+      (n(!0), c(U, null, q(d.value, (C) => (n(), c("li", {
         class: "px-2 py-1.5 cursor-pointer hover:bg-neutral-200 dark:hover:bg-gray-700",
         key: C.title,
-        onClick: (D) => c(C)
+        onClick: (D) => v(C)
       }, [
-        C.link ? (n(), u("a", {
+        C.link ? (n(), c("a", {
           key: 0,
           target: "_blank",
           href: C.link,
           download: C.link
         }, [
           ma,
-          t("span", null, v(C.title()), 1)
-        ], 8, ua)) : (n(), u(U, { key: 1 }, [
+          t("span", null, m(C.title()), 1)
+        ], 8, ua)) : (n(), c(U, { key: 1 }, [
           va,
-          t("span", null, v(C.title()), 1)
+          t("span", null, m(C.title()), 1)
         ], 64))
       ], 8, ca))), 128))
     ], 4)) : E("", !0);
@@ -1391,21 +1398,21 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   name: "VFStatusbar"
 }, Aa = /* @__PURE__ */ Object.assign(ja, {
   setup(p) {
-    const e = F("ServiceContainer"), { t: s } = e.i18n, { setStore: r } = e.storage, o = b(0), i = () => {
+    const e = F("ServiceContainer"), { t: s } = e.i18n, { setStore: r } = e.storage, o = b(0), l = () => {
       e.emitter.emit("vf-search-exit"), e.emitter.emit("vf-fetch", { params: { q: "index", adapter: e.adapter } }), r("adapter", e.adapter);
     };
-    e.emitter.on("vf-nodes-selected", (l) => {
-      o.value = l.length;
+    e.emitter.on("vf-nodes-selected", (i) => {
+      o.value = i.length;
     });
-    const m = b("");
-    e.emitter.on("vf-search-query", ({ newQuery: l }) => {
-      m.value = l;
+    const u = b("");
+    e.emitter.on("vf-search-query", ({ newQuery: i }) => {
+      u.value = i;
     });
     const d = Q(() => {
-      const l = e.selectButton.multiple ? e.selectedItems.length > 0 : e.selectedItems.length === 1;
-      return e.selectButton.active && l;
+      const i = e.selectButton.multiple ? e.selectedItems.length > 0 : e.selectedItems.length === 1;
+      return e.selectButton.active && i;
     });
-    return (l, c) => (n(), u("div", fa, [
+    return (i, v) => (n(), c("div", fa, [
       t("div", ga, [
         t("div", {
           class: "mx-2",
@@ -1414,32 +1421,32 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           role: "tooltip"
         }, ya, 8, _a),
         R(t("select", {
-          "onUpdate:modelValue": c[0] || (c[0] = (g) => a(e).adapter = g),
-          onChange: i,
+          "onUpdate:modelValue": v[0] || (v[0] = (h) => a(e).adapter = h),
+          onChange: l,
           class: "py-0.5 text-sm text-slate-500 border dark:border-gray-600 dark:text-neutral-50 dark:bg-gray-700 rounded pl-2 pr-8"
         }, [
-          (n(!0), u(U, null, q(a(e).data.storages, (g) => (n(), u("option", { value: g }, v(g), 9, ba))), 256))
+          (n(!0), c(U, null, q(a(e).data.storages, (h) => (n(), c("option", { value: h }, m(h), 9, ba))), 256))
         ], 544), [
           [pe, a(e).adapter]
         ]),
         t("div", xa, [
-          m.value.length ? (n(), u("span", wa, v(a(e).data.files.length) + " items found. ", 1)) : E("", !0),
-          t("span", $a, v(o.value > 0 ? a(s)("%s item(s) selected.", o.value) : ""), 1)
+          u.value.length ? (n(), c("span", wa, m(a(e).data.files.length) + " items found. ", 1)) : E("", !0),
+          t("span", $a, m(o.value > 0 ? a(s)("%s item(s) selected.", o.value) : ""), 1)
         ])
       ]),
       t("div", Ca, [
-        a(e).selectButton.active ? (n(), u("button", {
+        a(e).selectButton.active ? (n(), c("button", {
           key: 0,
           class: N(["vf-btn py-0 vf-btn-primary", { disabled: !d.value }]),
           disabled: !d.value,
-          onClick: c[1] || (c[1] = (g) => a(e).selectButton.click(a(e).selectedItems, g))
-        }, v(a(s)("Select")), 11, Sa)) : E("", !0),
+          onClick: v[1] || (v[1] = (h) => a(e).selectButton.click(a(e).selectedItems, h))
+        }, m(a(s)("Select")), 11, Sa)) : E("", !0),
         t("span", {
           class: "mr-1",
           "aria-label": a(s)("About"),
           "data-microtip-position": "top-left",
           role: "tooltip",
-          onClick: c[2] || (c[2] = (g) => a(e).emitter.emit("vf-modal-show", { type: "about" }))
+          onClick: v[2] || (v[2] = (h) => a(e).emitter.emit("vf-modal-show", { type: "about" }))
         }, Da, 8, Ma)
       ])
     ]));
@@ -1509,48 +1516,48 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p, { emit: e }) {
     const s = e, o = Je(p, F("VueFinderOptions"));
     je("ServiceContainer", o);
-    const { setStore: i } = o.storage, m = b(null);
-    o.root = m, o.i18n, o.emitter.on("vf-modal-close", () => {
+    const { setStore: l } = o.storage, u = b(null);
+    o.root = u, o.i18n, o.emitter.on("vf-modal-close", () => {
       o.modal.active = !1;
-    }), o.emitter.on("vf-modal-show", (c) => {
-      o.modal.active = !0, o.modal.type = c.type, o.modal.data = c;
+    }), o.emitter.on("vf-modal-show", (v) => {
+      o.modal.active = !0, o.modal.type = v.type, o.modal.data = v;
     });
-    const d = (c) => {
-      Object.assign(o.data, c), o.emitter.emit("vf-nodes-selected", {}), o.emitter.emit("vf-explorer-update");
+    const d = (v) => {
+      Object.assign(o.data, v), o.emitter.emit("vf-nodes-selected", {}), o.emitter.emit("vf-explorer-update");
     };
-    o.emitter.on("vf-nodes-selected", (c) => {
-      o.selectedItems = c, s("select", c);
+    o.emitter.on("vf-nodes-selected", (v) => {
+      o.selectedItems = v, s("select", v);
     });
-    let l;
+    let i;
     return o.emitter.on("vf-fetch-abort", () => {
-      l.abort(), o.loading = !1;
-    }), o.emitter.on("vf-fetch", ({ params: c, body: g = null, onSuccess: _ = null, onError: S = null, noCloseModal: C = !1 }) => {
-      ["index", "search"].includes(c.q) && (l && l.abort(), o.loading = !0), l = new AbortController();
-      const D = l.signal;
+      i.abort(), o.loading = !1;
+    }), o.emitter.on("vf-fetch", ({ params: v, body: h = null, onSuccess: f = null, onError: S = null, noCloseModal: C = !1 }) => {
+      ["index", "search"].includes(v.q) && (i && i.abort(), o.loading = !0), i = new AbortController();
+      const D = i.signal;
       o.requester.send({
         url: "",
-        method: c.m || "get",
-        params: c,
-        body: g,
+        method: v.m || "get",
+        params: v,
+        body: h,
         abortSignal: D
       }).then((M) => {
-        o.adapter = M.adapter, o.persist && (o.path = M.dirname, i("path", o.path)), ["index", "search"].includes(c.q) && (o.loading = !1), C || o.emitter.emit("vf-modal-close"), d(M), s("open", M.dirname), _ && _(M);
+        o.adapter = M.adapter, o.persist && (o.path = M.dirname, l("path", o.path)), ["index", "search"].includes(v.q) && (o.loading = !1), C || o.emitter.emit("vf-modal-close"), d(M), s("open", M.dirname), f && f(M);
       }).catch((M) => {
         S && S(M);
       });
-    }), o.emitter.on("vf-download", (c) => {
-      const g = document.createElement("a");
-      g.style.display = "none", g.target = "_blank", g.href = c, g.download = c, o.root.appendChild(g), g.click(), g.remove();
+    }), o.emitter.on("vf-download", (v) => {
+      const h = document.createElement("a");
+      h.style.display = "none", h.target = "_blank", h.href = v, h.download = v, o.root.appendChild(h), h.click(), h.remove();
     }), I(() => {
-      let c = {};
-      o.path.includes("://") && (c = {
+      let v = {};
+      o.path.includes("://") && (v = {
         adapter: o.path.split("://")[0],
         path: o.path
-      }), o.emitter.emit("vf-fetch", { params: { q: "index", adapter: o.adapter, ...c } });
-    }), (c, g) => (n(), u("div", {
+      }), o.emitter.emit("vf-fetch", { params: { q: "index", adapter: o.adapter, ...v } });
+    }), (v, h) => (n(), c("div", {
       class: "vuefinder",
       ref_key: "root",
-      ref: m
+      ref: u
     }, [
       t("div", {
         class: N(a(o).theme.actualValue === "dark" ? "dark" : "")
@@ -1558,8 +1565,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         t("div", {
           class: N([a(o).fullScreen ? "fixed w-screen inset-0 z-20" : "relative rounded-md", "border flex flex-col bg-white dark:bg-gray-800 text-gray-700 dark:text-neutral-400 border-neutral-300 dark:border-gray-900 min-w-min select-none"]),
           style: ye(a(o).fullScreen ? "" : "max-height: " + p.maxHeight),
-          onMousedown: g[0] || (g[0] = (_) => a(o).emitter.emit("vf-contextmenu-hide")),
-          onTouchstart: g[1] || (g[1] = (_) => a(o).emitter.emit("vf-contextmenu-hide"))
+          onMousedown: h[0] || (h[0] = (f) => a(o).emitter.emit("vf-contextmenu-hide")),
+          onTouchstart: h[1] || (h[1] = (f) => a(o).emitter.emit("vf-contextmenu-hide"))
         }, [
           B(Vt),
           B(cs),
@@ -1583,7 +1590,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     return I(() => {
       const s = document.querySelector(".v-f-modal input");
       s && s.focus();
-    }), (s, r) => (n(), u("div", {
+    }), (s, r) => (n(), c("div", {
       class: "v-f-modal relative z-30",
       "aria-labelledby": "modal-title",
       role: "dialog",
@@ -1635,23 +1642,23 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   },
   emits: ["hidden"],
   setup(p, { emit: e }) {
-    var c;
-    const s = e, r = F("ServiceContainer"), { t: o } = r.i18n, i = b(!1), m = b(null), d = b((c = m.value) == null ? void 0 : c.strMessage);
-    ie(d, () => i.value = !1);
-    const l = () => {
-      s("hidden"), i.value = !0;
+    var v;
+    const s = e, r = F("ServiceContainer"), { t: o } = r.i18n, l = b(!1), u = b(null), d = b((v = u.value) == null ? void 0 : v.strMessage);
+    ie(d, () => l.value = !1);
+    const i = () => {
+      s("hidden"), l.value = !0;
     };
-    return (g, _) => (n(), u("div", null, [
-      i.value ? E("", !0) : (n(), u("div", {
+    return (h, f) => (n(), c("div", null, [
+      l.value ? E("", !0) : (n(), c("div", {
         key: 0,
         ref_key: "strMessage",
-        ref: m,
+        ref: u,
         class: N(["flex mt-2 p-1 px-2 rounded text-sm break-all dark:opacity-75", p.error ? "bg-red-100 text-red-600 " : "bg-emerald-100 text-emerald-600"])
       }, [
-        ne(g.$slots, "default"),
+        ne(h.$slots, "default"),
         t("div", {
           class: "ml-auto cursor-pointer",
-          onClick: l,
+          onClick: i,
           "aria-label": a(o)("Close"),
           "data-microtip-position": "top-left",
           role: "tooltip"
@@ -1714,7 +1721,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer");
     e.storage;
-    const { t: s } = e.i18n, r = b(e.modal.data.items), o = b(""), i = () => {
+    const { t: s } = e.i18n, r = b(e.modal.data.items), o = b(""), l = () => {
       r.value.length && e.emitter.emit("vf-fetch", {
         params: {
           q: "delete",
@@ -1723,50 +1730,50 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           path: e.data.dirname
         },
         body: {
-          items: r.value.map(({ path: m, type: d }) => ({ path: m, type: d }))
+          items: r.value.map(({ path: u, type: d }) => ({ path: u, type: d }))
         },
         onSuccess: () => {
           e.emitter.emit("vf-toast-push", { label: s("Files deleted.") });
         },
-        onError: (m) => {
-          o.value = s(m.message);
+        onError: (u) => {
+          o.value = s(u.message);
         }
       });
     };
-    return (m, d) => (n(), L(P, null, {
+    return (u, d) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: i,
+          onClick: l,
           class: "vf-btn vf-btn-danger"
-        }, v(a(s)("Yes, Delete!")), 1),
+        }, m(a(s)("Yes, Delete!")), 1),
         t("button", {
           type: "button",
-          onClick: d[1] || (d[1] = (l) => a(e).emitter.emit("vf-modal-close")),
+          onClick: d[1] || (d[1] = (i) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1),
-        t("div", oo, v(a(s)("This action cannot be undone.")), 1)
+        }, m(a(s)("Cancel")), 1),
+        t("div", oo, m(a(s)("This action cannot be undone.")), 1)
       ]),
       default: A(() => [
         t("div", qa, [
           Ia,
           t("div", Pa, [
-            t("h3", Wa, v(a(s)("Delete files")), 1),
+            t("h3", Wa, m(a(s)("Delete files")), 1),
             t("div", Ga, [
-              t("p", Ya, v(a(s)("Are you sure you want to delete these files?")), 1),
+              t("p", Ya, m(a(s)("Are you sure you want to delete these files?")), 1),
               t("div", Ka, [
-                (n(!0), u(U, null, q(r.value, (l) => (n(), u("p", Ja, [
-                  l.type === "dir" ? (n(), u("svg", Xa, Za)) : (n(), u("svg", eo, so)),
-                  t("span", ao, v(l.basename), 1)
+                (n(!0), c(U, null, q(r.value, (i) => (n(), c("p", Ja, [
+                  i.type === "dir" ? (n(), c("svg", Xa, Za)) : (n(), c("svg", eo, so)),
+                  t("span", ao, m(i.basename), 1)
                 ]))), 256))
               ]),
               o.value.length ? (n(), L(W, {
                 key: 0,
-                onHidden: d[0] || (d[0] = (l) => o.value = ""),
+                onHidden: d[0] || (d[0] = (i) => o.value = ""),
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(o.value), 1)
+                  T(m(o.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -1804,19 +1811,19 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: o[0] || (o[0] = (i) => a(e).emitter.emit("vf-modal-close")),
+          onClick: o[0] || (o[0] = (l) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Close")), 1)
+        }, m(a(s)("Close")), 1)
       ]),
       default: A(() => {
-        var i, m;
+        var l, u;
         return [
           t("div", lo, [
             io,
             t("div", co, [
-              t("h3", uo, v(((i = a(e).modal.data) == null ? void 0 : i.title) ?? "Title"), 1),
+              t("h3", uo, m(((l = a(e).modal.data) == null ? void 0 : l.title) ?? "Title"), 1),
               t("div", mo, [
-                t("p", vo, v(((m = a(e).modal.data) == null ? void 0 : m.message) ?? "Message"), 1)
+                t("p", vo, m(((u = a(e).modal.data) == null ? void 0 : u.message) ?? "Message"), 1)
               ])
             ])
           ])
@@ -1849,7 +1856,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer");
     e.storage;
-    const { t: s } = e.i18n, r = b(""), o = b(""), i = () => {
+    const { t: s } = e.i18n, r = b(""), o = b(""), l = () => {
       r.value != "" && e.emitter.emit("vf-fetch", {
         params: {
           q: "newfolder",
@@ -1863,34 +1870,34 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         onSuccess: () => {
           e.emitter.emit("vf-toast-push", { label: s("%s is created.", r.value) });
         },
-        onError: (m) => {
-          o.value = s(m.message);
+        onError: (u) => {
+          o.value = s(u.message);
         }
       });
     };
-    return (m, d) => (n(), L(P, null, {
+    return (u, d) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: i,
+          onClick: l,
           class: "vf-btn vf-btn-primary"
-        }, v(a(s)("Create")), 1),
+        }, m(a(s)("Create")), 1),
         t("button", {
           type: "button",
-          onClick: d[2] || (d[2] = (l) => a(e).emitter.emit("vf-modal-close")),
+          onClick: d[2] || (d[2] = (i) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1)
+        }, m(a(s)("Cancel")), 1)
       ]),
       default: A(() => [
         t("div", fo, [
           go,
           t("div", _o, [
-            t("h3", ko, v(a(s)("New Folder")), 1),
+            t("h3", ko, m(a(s)("New Folder")), 1),
             t("div", yo, [
-              t("p", bo, v(a(s)("Create a new folder")), 1),
+              t("p", bo, m(a(s)("Create a new folder")), 1),
               R(t("input", {
-                "onUpdate:modelValue": d[0] || (d[0] = (l) => r.value = l),
-                onKeyup: J(i, ["enter"]),
+                "onUpdate:modelValue": d[0] || (d[0] = (i) => r.value = i),
+                onKeyup: J(l, ["enter"]),
                 class: "px-2 py-1 border rounded dark:bg-gray-700/25 dark:focus:ring-gray-600 dark:focus:border-gray-600 dark:text-gray-100 w-full",
                 placeholder: a(s)("Folder Name"),
                 type: "text"
@@ -1899,11 +1906,11 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
               ]),
               o.value.length ? (n(), L(W, {
                 key: 0,
-                onHidden: d[1] || (d[1] = (l) => o.value = ""),
+                onHidden: d[1] || (d[1] = (i) => o.value = ""),
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(o.value), 1)
+                  T(m(o.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -1938,7 +1945,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer");
     e.storage;
-    const { t: s } = e.i18n, r = b(""), o = b(""), i = () => {
+    const { t: s } = e.i18n, r = b(""), o = b(""), l = () => {
       r.value != "" && e.emitter.emit("vf-fetch", {
         params: {
           q: "newfile",
@@ -1952,34 +1959,34 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         onSuccess: () => {
           e.emitter.emit("vf-toast-push", { label: s("%s is created.", r.value) });
         },
-        onError: (m) => {
-          o.value = s(m.message);
+        onError: (u) => {
+          o.value = s(u.message);
         }
       });
     };
-    return (m, d) => (n(), L(P, null, {
+    return (u, d) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: i,
+          onClick: l,
           class: "vf-btn vf-btn-primary"
-        }, v(a(s)("Create")), 1),
+        }, m(a(s)("Create")), 1),
         t("button", {
           type: "button",
-          onClick: d[2] || (d[2] = (l) => a(e).emitter.emit("vf-modal-close")),
+          onClick: d[2] || (d[2] = (i) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1)
+        }, m(a(s)("Cancel")), 1)
       ]),
       default: A(() => [
         t("div", Co, [
           So,
           t("div", Mo, [
-            t("h3", Eo, v(a(s)("New File")), 1),
+            t("h3", Eo, m(a(s)("New File")), 1),
             t("div", Do, [
-              t("p", jo, v(a(s)("Create a new file")), 1),
+              t("p", jo, m(a(s)("Create a new file")), 1),
               R(t("input", {
-                "onUpdate:modelValue": d[0] || (d[0] = (l) => r.value = l),
-                onKeyup: J(i, ["enter"]),
+                "onUpdate:modelValue": d[0] || (d[0] = (i) => r.value = i),
+                onKeyup: J(l, ["enter"]),
                 class: "px-2 py-1 border rounded dark:bg-gray-700/25 dark:focus:ring-gray-600 dark:focus:border-gray-600 dark:text-gray-100 w-full",
                 placeholder: a(s)("File Name"),
                 type: "text"
@@ -1988,11 +1995,11 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
               ]),
               o.value.length ? (n(), L(W, {
                 key: 0,
-                onHidden: d[1] || (d[1] = (l) => o.value = ""),
+                onHidden: d[1] || (d[1] = (i) => o.value = ""),
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(o.value), 1)
+                  T(m(o.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -2010,67 +2017,67 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   __name: "Text",
   emits: ["success"],
   setup(p, { emit: e }) {
-    const s = e, r = b(""), o = b(""), i = b(null), m = b(!1), d = b(""), l = b(!1), c = F("ServiceContainer"), { t: g } = c.i18n;
+    const s = e, r = b(""), o = b(""), l = b(null), u = b(!1), d = b(""), i = b(!1), v = F("ServiceContainer"), { t: h } = v.i18n;
     I(() => {
-      c.requester.send({
+      v.requester.send({
         url: "",
         method: "get",
-        params: { q: "preview", adapter: c.modal.data.adapter, path: c.modal.data.item.path },
+        params: { q: "preview", adapter: v.modal.data.adapter, path: v.modal.data.item.path },
         responseType: "text"
       }).then((C) => {
         r.value = C, s("success");
       });
     });
-    const _ = () => {
-      m.value = !m.value, o.value = r.value, m.value == !0 && de(() => {
-        i.value.focus();
+    const f = () => {
+      u.value = !u.value, o.value = r.value, u.value == !0 && de(() => {
+        l.value.focus();
       });
     }, S = () => {
-      d.value = "", l.value = !1, c.requester.send({
+      d.value = "", i.value = !1, v.requester.send({
         url: "",
         method: "post",
         params: {
           q: "save",
-          adapter: c.modal.data.adapter,
-          path: c.modal.data.item.path
+          adapter: v.modal.data.adapter,
+          path: v.modal.data.item.path
         },
         body: {
           content: o.value
         },
         responseType: "text"
       }).then((C) => {
-        d.value = g("Updated."), r.value = C, s("success"), m.value = !m.value;
+        d.value = h("Updated."), r.value = C, s("success"), u.value = !u.value;
       }).catch((C) => {
-        d.value = g(C.message), l.value = !0;
+        d.value = h(C.message), i.value = !0;
       });
     };
-    return (C, D) => (n(), u(U, null, [
+    return (C, D) => (n(), c(U, null, [
       t("div", To, [
         t("div", {
           class: "mb-2 text-lg leading-6 font-medium text-gray-900 dark:text-gray-400",
           id: "modal-title",
-          "aria-label": a(c).modal.data.item.path,
+          "aria-label": a(v).modal.data.item.path,
           "data-microtip-position": "bottom-right",
           role: "tooltip"
-        }, v(a(c).modal.data.item.basename), 9, Oo),
+        }, m(a(v).modal.data.item.basename), 9, Oo),
         t("div", Vo, [
-          m.value ? (n(), u("button", {
+          u.value ? (n(), c("button", {
             key: 0,
             onClick: S,
             class: "ml-1 px-2 py-1 rounded border border-transparent shadow-sm bg-blue-700/75 hover:bg-blue-700 dark:bg-gray-700 dark:hover:bg-gray-700/50 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm"
-          }, v(a(g)("Save")), 1)) : E("", !0),
-          a(c).features.includes(a(V).EDIT) ? (n(), u("button", {
+          }, m(a(h)("Save")), 1)) : E("", !0),
+          a(v).features.includes(a(V).EDIT) ? (n(), c("button", {
             key: 1,
             class: "ml-1 px-2 py-1 text-blue-500",
-            onClick: D[0] || (D[0] = (M) => _())
-          }, v(m.value ? a(g)("Cancel") : a(g)("Edit")), 1)) : E("", !0)
+            onClick: D[0] || (D[0] = (M) => f())
+          }, m(u.value ? a(h)("Cancel") : a(h)("Edit")), 1)) : E("", !0)
         ])
       ]),
       t("div", null, [
-        m.value ? (n(), u("div", Uo, [
+        u.value ? (n(), c("div", Uo, [
           R(t("textarea", {
             ref_key: "editInput",
-            ref: i,
+            ref: l,
             "onUpdate:modelValue": D[1] || (D[1] = (M) => o.value = M),
             class: "w-full p-2 rounded dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-gray-600 dark:focus:border-gray-600 dark:selection:bg-gray-500 min-h-[200px] max-h-[60vh] text-xs",
             name: "text",
@@ -2080,14 +2087,14 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           }, null, 512), [
             [X, o.value]
           ])
-        ])) : (n(), u("pre", No, v(r.value), 1)),
+        ])) : (n(), c("pre", No, m(r.value), 1)),
         d.value.length ? (n(), L(W, {
           key: 2,
           onHidden: D[2] || (D[2] = (M) => d.value = ""),
-          error: l.value
+          error: i.value
         }, {
           default: A(() => [
-            T(v(d.value), 1)
+            T(m(d.value), 1)
           ]),
           _: 1
         }, 8, ["error"])) : E("", !0)
@@ -2098,18 +2105,18 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   __name: "Image",
   emits: ["success"],
   setup(p, { emit: e }) {
-    const s = e, r = F("ServiceContainer"), { t: o } = r.i18n, i = b(null), m = b(null), d = b(!1), l = b(""), c = b(!1), g = () => {
-      d.value = !d.value, d.value ? m.value = new Ue(i.value, {
+    const s = e, r = F("ServiceContainer"), { t: o } = r.i18n, l = b(null), u = b(null), d = b(!1), i = b(""), v = b(!1), h = () => {
+      d.value = !d.value, d.value ? u.value = new Ue(l.value, {
         crop(S) {
         }
-      }) : m.value.destroy();
-    }, _ = () => {
-      m.value.getCroppedCanvas({
+      }) : u.value.destroy();
+    }, f = () => {
+      u.value.getCroppedCanvas({
         width: 795,
         height: 341
       }).toBlob(
         (S) => {
-          l.value = "", c.value = !1;
+          i.value = "", v.value = !1;
           const C = new FormData();
           C.set("file", S), r.requester.send({
             url: "",
@@ -2121,16 +2128,16 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
             },
             body: C
           }).then((D) => {
-            l.value = o("Updated."), i.value.src = r.requester.getPreviewUrl(r.modal.data.adapter, r.modal.data.item), g(), s("success");
+            i.value = o("Updated."), l.value.src = r.requester.getPreviewUrl(r.modal.data.adapter, r.modal.data.item), h(), s("success");
           }).catch((D) => {
-            l.value = o(D.message), c.value = !0;
+            i.value = o(D.message), v.value = !0;
           });
         }
       );
     };
     return I(() => {
       s("success");
-    }), (S, C) => (n(), u(U, null, [
+    }), (S, C) => (n(), c(U, null, [
       t("div", zo, [
         t("h3", {
           class: "mb-2 text-lg leading-6 font-medium text-gray-900 dark:text-gray-400",
@@ -2138,36 +2145,36 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           "aria-label": a(r).modal.data.item.path,
           "data-microtip-position": "bottom-right",
           role: "tooltip"
-        }, v(a(r).modal.data.item.basename), 9, Ho),
+        }, m(a(r).modal.data.item.basename), 9, Ho),
         t("div", Ro, [
-          d.value ? (n(), u("button", {
+          d.value ? (n(), c("button", {
             key: 0,
-            onClick: _,
+            onClick: f,
             class: "ml-1 px-2 py-1 rounded border border-transparent shadow-sm bg-blue-700/75 hover:bg-blue-700 dark:bg-gray-700 dark:hover:bg-gray-700/50 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm"
-          }, v(a(o)("Crop")), 1)) : E("", !0),
-          a(r).features.includes(a(V).EDIT) ? (n(), u("button", {
+          }, m(a(o)("Crop")), 1)) : E("", !0),
+          a(r).features.includes(a(V).EDIT) ? (n(), c("button", {
             key: 1,
             class: "ml-1 px-2 py-1 text-blue-500",
-            onClick: C[0] || (C[0] = (D) => g())
-          }, v(d.value ? a(o)("Cancel") : a(o)("Edit")), 1)) : E("", !0)
+            onClick: C[0] || (C[0] = (D) => h())
+          }, m(d.value ? a(o)("Cancel") : a(o)("Edit")), 1)) : E("", !0)
         ])
       ]),
       t("div", qo, [
         t("img", {
           ref_key: "image",
-          ref: i,
+          ref: l,
           class: "max-w-[50vh] max-h-[50vh]",
           src: a(r).requester.getPreviewUrl(a(r).modal.data.adapter, a(r).modal.data.item),
           alt: ""
         }, null, 8, Io)
       ]),
-      l.value.length ? (n(), L(W, {
+      i.value.length ? (n(), L(W, {
         key: 0,
-        onHidden: C[1] || (C[1] = (D) => l.value = ""),
-        error: c.value
+        onHidden: C[1] || (C[1] = (D) => i.value = ""),
+        error: v.value
       }, {
         default: A(() => [
-          T(v(l.value), 1)
+          T(m(i.value), 1)
         ]),
         _: 1
       }, 8, ["error"])) : E("", !0)
@@ -2180,7 +2187,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     const s = F("ServiceContainer"), r = e;
     return I(() => {
       r("success");
-    }), (o, i) => (n(), u(U, null, [
+    }), (o, l) => (n(), c(U, null, [
       t("div", Wo, [
         t("h3", {
           class: "mb-2 text-lg leading-6 font-medium text-gray-900 dark:text-gray-400",
@@ -2188,7 +2195,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           "aria-label": a(s).modal.data.item.path,
           "data-microtip-position": "bottom-right",
           role: "tooltip"
-        }, v(a(s).modal.data.item.basename), 9, Go)
+        }, m(a(s).modal.data.item.basename), 9, Go)
       ]),
       Yo
     ], 64));
@@ -2204,14 +2211,14 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     const s = F("ServiceContainer"), r = e, o = () => s.requester.getPreviewUrl(s.modal.data.adapter, s.modal.data.item);
     return I(() => {
       r("success");
-    }), (i, m) => (n(), u("div", null, [
+    }), (l, u) => (n(), c("div", null, [
       t("h3", {
         class: "mb-2 text-lg leading-6 font-medium text-gray-900 dark:text-gray-400",
         id: "modal-title",
         "aria-label": a(s).modal.data.item.path,
         "data-microtip-position": "bottom-right",
         role: "tooltip"
-      }, v(a(s).modal.data.item.basename), 9, Jo),
+      }, m(a(s).modal.data.item.basename), 9, Jo),
       t("div", null, [
         t("video", Xo, [
           t("source", {
@@ -2233,14 +2240,14 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     const s = e, r = F("ServiceContainer"), o = () => r.requester.getPreviewUrl(r.modal.data.adapter, r.modal.data.item);
     return I(() => {
       s("success");
-    }), (i, m) => (n(), u(U, null, [
+    }), (l, u) => (n(), c(U, null, [
       t("h3", {
         class: "mb-2 text-lg leading-6 font-medium text-gray-900 dark:text-gray-400",
         id: "modal-title",
         "aria-label": a(r).modal.data.item.path,
         "data-microtip-position": "bottom-right",
         role: "tooltip"
-      }, v(a(r).modal.data.item.basename), 9, er),
+      }, m(a(r).modal.data.item.basename), 9, er),
       t("div", null, [
         t("audio", tr, [
           t("source", {
@@ -2265,14 +2272,14 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     const s = F("ServiceContainer"), r = e, o = () => s.requester.getPreviewUrl(s.modal.data.adapter, s.modal.data.item);
     return I(() => {
       r("success");
-    }), (i, m) => (n(), u(U, null, [
+    }), (l, u) => (n(), c(U, null, [
       t("h3", {
         class: "mb-2 text-lg leading-6 font-medium text-gray-900 dark:text-gray-400",
         id: "modal-title",
         "aria-label": a(s).modal.data.item.path,
         "data-microtip-position": "bottom-right",
         role: "tooltip"
-      }, v(a(s).modal.data.item.basename), 9, or),
+      }, m(a(s).modal.data.item.basename), 9, or),
       t("div", null, [
         t("object", {
           class: "h-[60vh]",
@@ -2320,66 +2327,66 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   name: "VFModalPreview"
 }, xr = /* @__PURE__ */ Object.assign(br, {
   setup(p) {
-    const e = F("ServiceContainer"), { t: s } = e.i18n, r = b(!1), o = (m) => (e.modal.data.item.mime_type ?? "").startsWith(m), i = e.features.includes(V.PREVIEW);
-    return i || (r.value = !0), (m, d) => (n(), L(P, null, {
+    const e = F("ServiceContainer"), { t: s } = e.i18n, r = b(!1), o = (u) => (e.modal.data.item.mime_type ?? "").startsWith(u), l = e.features.includes(V.PREVIEW);
+    return l || (r.value = !0), (u, d) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: d[6] || (d[6] = (l) => a(e).emitter.emit("vf-modal-close")),
+          onClick: d[6] || (d[6] = (i) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Close")), 1),
-        a(e).features.includes(a(V).DOWNLOAD) ? (n(), u("a", {
+        }, m(a(s)("Close")), 1),
+        a(e).features.includes(a(V).DOWNLOAD) ? (n(), c("a", {
           key: 0,
           target: "_blank",
           class: "vf-btn vf-btn-primary",
           download: a(e).requester.getDownloadUrl(a(e).modal.data.adapter, a(e).modal.data.item),
           href: a(e).requester.getDownloadUrl(a(e).modal.data.adapter, a(e).modal.data.item)
-        }, v(a(s)("Download")), 9, yr)) : E("", !0)
+        }, m(a(s)("Download")), 9, yr)) : E("", !0)
       ]),
       default: A(() => [
         t("div", cr, [
           t("div", ur, [
-            a(i) ? (n(), u("div", mr, [
+            a(l) ? (n(), c("div", mr, [
               o("text") ? (n(), L(Bo, {
                 key: 0,
-                onSuccess: d[0] || (d[0] = (l) => r.value = !0)
+                onSuccess: d[0] || (d[0] = (i) => r.value = !0)
               })) : o("image") ? (n(), L(Po, {
                 key: 1,
-                onSuccess: d[1] || (d[1] = (l) => r.value = !0)
+                onSuccess: d[1] || (d[1] = (i) => r.value = !0)
               })) : o("video") ? (n(), L(Zo, {
                 key: 2,
-                onSuccess: d[2] || (d[2] = (l) => r.value = !0)
+                onSuccess: d[2] || (d[2] = (i) => r.value = !0)
               })) : o("audio") ? (n(), L(ar, {
                 key: 3,
-                onSuccess: d[3] || (d[3] = (l) => r.value = !0)
+                onSuccess: d[3] || (d[3] = (i) => r.value = !0)
               })) : o("application/pdf") ? (n(), L(dr, {
                 key: 4,
-                onSuccess: d[4] || (d[4] = (l) => r.value = !0)
+                onSuccess: d[4] || (d[4] = (i) => r.value = !0)
               })) : (n(), L(Ko, {
                 key: 5,
-                onSuccess: d[5] || (d[5] = (l) => r.value = !0)
+                onSuccess: d[5] || (d[5] = (i) => r.value = !0)
               }))
             ])) : E("", !0),
             t("div", vr, [
-              r.value === !1 ? (n(), u("div", pr, [
+              r.value === !1 ? (n(), c("div", pr, [
                 hr,
-                t("span", null, v(a(s)("Loading")), 1)
+                t("span", null, m(a(s)("Loading")), 1)
               ])) : E("", !0)
             ])
           ])
         ]),
         t("div", fr, [
           t("div", null, [
-            t("span", gr, v(a(s)("File Size")) + ": ", 1),
-            T(v(a(e).filesize(a(e).modal.data.item.file_size)), 1)
+            t("span", gr, m(a(s)("File Size")) + ": ", 1),
+            T(m(a(e).filesize(a(e).modal.data.item.file_size)), 1)
           ]),
           t("div", null, [
-            t("span", _r, v(a(s)("Last Modified")) + ": ", 1),
-            T(" " + v(a(we)(a(e).modal.data.item.last_modified)), 1)
+            t("span", _r, m(a(s)("Last Modified")) + ": ", 1),
+            T(" " + m(a(we)(a(e).modal.data.item.last_modified)), 1)
           ])
         ]),
-        a(e).features.includes(a(V).DOWNLOAD) ? (n(), u("div", kr, [
-          t("span", null, v(a(s)(`Download doesn't work? You can try right-click "Download" button, select "Save link as...".`)), 1)
+        a(e).features.includes(a(V).DOWNLOAD) ? (n(), c("div", kr, [
+          t("span", null, m(a(s)(`Download doesn't work? You can try right-click "Download" button, select "Save link as...".`)), 1)
         ])) : E("", !0)
       ]),
       _: 1
@@ -2437,7 +2444,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer");
     e.storage;
-    const { t: s } = e.i18n, r = b(e.modal.data.items[0]), o = b(e.modal.data.items[0].basename), i = b(""), m = () => {
+    const { t: s } = e.i18n, r = b(e.modal.data.items[0]), o = b(e.modal.data.items[0].basename), l = b(""), u = () => {
       o.value != "" && e.emitter.emit("vf-fetch", {
         params: {
           q: "rename",
@@ -2453,49 +2460,49 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           e.emitter.emit("vf-toast-push", { label: s("%s is renamed.", o.value) });
         },
         onError: (d) => {
-          i.value = s(d.message);
+          l.value = s(d.message);
         }
       });
     };
-    return (d, l) => (n(), L(P, null, {
+    return (d, i) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: m,
+          onClick: u,
           class: "vf-btn vf-btn-primary"
-        }, v(a(s)("Rename")), 1),
+        }, m(a(s)("Rename")), 1),
         t("button", {
           type: "button",
-          onClick: l[2] || (l[2] = (c) => a(e).emitter.emit("vf-modal-close")),
+          onClick: i[2] || (i[2] = (v) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1)
+        }, m(a(s)("Cancel")), 1)
       ]),
       default: A(() => [
         t("div", wr, [
           $r,
           t("div", Cr, [
-            t("h3", Sr, v(a(s)("Rename")), 1),
+            t("h3", Sr, m(a(s)("Rename")), 1),
             t("div", Mr, [
               t("p", Er, [
-                r.value.type === "dir" ? (n(), u("svg", Dr, Ar)) : (n(), u("svg", Lr, Tr)),
-                t("span", Or, v(r.value.basename), 1)
+                r.value.type === "dir" ? (n(), c("svg", Dr, Ar)) : (n(), c("svg", Lr, Tr)),
+                t("span", Or, m(r.value.basename), 1)
               ]),
               R(t("input", {
-                "onUpdate:modelValue": l[0] || (l[0] = (c) => o.value = c),
-                onKeyup: J(m, ["enter"]),
+                "onUpdate:modelValue": i[0] || (i[0] = (v) => o.value = v),
+                onKeyup: J(u, ["enter"]),
                 class: "px-2 py-1 border rounded dark:bg-gray-700/25 dark:focus:ring-gray-600 dark:focus:border-gray-600 dark:text-gray-100 w-full",
                 placeholder: "Name",
                 type: "text"
               }, null, 544), [
                 [X, o.value]
               ]),
-              i.value.length ? (n(), L(W, {
+              l.value.length ? (n(), L(W, {
                 key: 0,
-                onHidden: l[1] || (l[1] = (c) => i.value = ""),
+                onHidden: i[1] || (i[1] = (v) => l.value = ""),
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(i.value), 1)
+                  T(m(l.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -2561,13 +2568,13 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       UPLOADING: 2,
       ERROR: 3,
       DONE: 10
-    }, i = b({ QUEUE_ENTRY_STATUS: o }), m = b(null), d = b(null), l = b(null), c = b(null), g = b(null), _ = b(null), S = b([]), C = b(""), D = b(!1), M = b(!1);
-    let h;
-    function f(x) {
+    }, l = b({ QUEUE_ENTRY_STATUS: o }), u = b(null), d = b(null), i = b(null), v = b(null), h = b(null), f = b(null), S = b([]), C = b(""), D = b(!1), M = b(!1);
+    let g;
+    function _(x) {
       return S.value.findIndex((k) => k.id === x);
     }
     function O(x, k = null) {
-      k = k ?? (x.webkitRelativePath || x.name), h.addFile({
+      k = k ?? (x.webkitRelativePath || x.name), g.addFile({
         name: k,
         type: x.type,
         data: x,
@@ -2600,7 +2607,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       }
     };
     function Z() {
-      c.value.click();
+      v.value.click();
     }
     function ee() {
       if (!D.value) {
@@ -2608,20 +2615,20 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           C.value = s("Please select file to upload first.");
           return;
         }
-        C.value = "", h.retryAll(), h.upload();
+        C.value = "", g.retryAll(), g.upload();
       }
     }
     function te() {
-      h.cancelAll({ reason: "user" }), S.value.forEach((x) => {
+      g.cancelAll({ reason: "user" }), S.value.forEach((x) => {
         x.status !== o.DONE && (x.status = o.CANCELED, x.statusName = s("Canceled"));
       }), D.value = !1;
     }
     function se(x) {
-      D.value || (h.removeFile(x.id, "removed-by-user"), S.value.splice(f(x.id), 1));
+      D.value || (g.removeFile(x.id, "removed-by-user"), S.value.splice(_(x.id), 1));
     }
     function ae(x) {
       if (!D.value) {
-        if (h.cancelAll({ reason: "user" }), x) {
+        if (g.cancelAll({ reason: "user" }), x) {
           const k = [];
           S.value.forEach((y) => {
             y.status !== o.DONE && k.push(y);
@@ -2644,7 +2651,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       });
     }
     return I(async () => {
-      h = new Be({
+      g = new Be({
         debug: e.debug,
         restrictions: {
           maxFileSize: Ye(e.maxFileSize)
@@ -2654,8 +2661,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         locale: r,
         onBeforeFileAdded(y, $) {
           if ($[y.id] != null) {
-            const H = f(y.id);
-            S.value[H].status === o.PENDING && (C.value = h.i18n("noDuplicates", { fileName: y.name })), S.value = S.value.filter((ue) => ue.id !== y.id);
+            const H = _(y.id);
+            S.value[H].status === o.PENDING && (C.value = g.i18n("noDuplicates", { fileName: y.name })), S.value = S.value.filter((ue) => ue.id !== y.id);
           }
           return S.value.push({
             id: y.id,
@@ -2667,7 +2674,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
             originalFile: y.data
           }), !0;
         }
-      }), h.use(ze, {
+      }), g.use(ze, {
         endpoint: "WILL_BE_REPLACED_BEFORE_UPLOAD",
         limit: 5,
         timeout: 0,
@@ -2681,44 +2688,44 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           return new Error(j);
         },
         ...e.requester.config.xhrOptions
-      }), h.on("restriction-failed", (y, $) => {
-        const j = S.value[f(y.id)];
+      }), g.on("restriction-failed", (y, $) => {
+        const j = S.value[_(y.id)];
         se(j), C.value = $.message;
-      }), h.on("upload", async () => {
+      }), g.on("upload", async () => {
         const y = w();
-        h.setMeta({ ...y.body }), e.requester.config.xhrOptions.setUploadFileState && h.getFiles().forEach((j) => {
-          h.setFileState(j.id, e.requester.config.xhrOptions.setUploadFileState(j, y));
+        g.setMeta({ ...y.body }), e.requester.config.xhrOptions.setUploadFileState && g.getFiles().forEach((j) => {
+          g.setFileState(j.id, e.requester.config.xhrOptions.setUploadFileState(j, y));
         });
-        const $ = h.getPlugin("XHRUpload");
+        const $ = g.getPlugin("XHRUpload");
         $.opts.method = y.method, $.opts.endpoint = y.url + "?" + new URLSearchParams(y.params), $.opts.headers = y.headers, D.value = !0, S.value.forEach((j) => {
           j.status !== o.DONE && (j.percent = null, j.status = o.UPLOADING, j.statusName = s("Pending upload"));
         });
-      }), h.on("upload-progress", (y, $) => {
+      }), g.on("upload-progress", (y, $) => {
         const j = Math.floor($.bytesUploaded / $.bytesTotal * 100);
-        S.value[f(y.id)].percent = `${j}%`;
-      }), h.on("upload-success", (y) => {
-        const $ = S.value[f(y.id)];
+        S.value[_(y.id)].percent = `${j}%`;
+      }), g.on("upload-success", (y) => {
+        const $ = S.value[_(y.id)];
         $.status = o.DONE, $.statusName = s("Done");
-      }), h.on("upload-error", (y, $) => {
-        const j = S.value[f(y.id)];
+      }), g.on("upload-error", (y, $) => {
+        const j = S.value[_(y.id)];
         j.percent = null, j.status = o.ERROR, $.isNetworkError ? j.statusName = s("Network Error, Unable establish connection to the server or interrupted.") : j.statusName = $ ? $.message : s("Unknown Error");
-      }), h.on("error", (y) => {
+      }), g.on("error", (y) => {
         C.value = y.message, D.value = !1, e.emitter.emit("vf-fetch", {
           params: { q: "index", adapter: e.data.adapter, path: e.data.dirname },
           noCloseModal: !0
         });
-      }), h.on("complete", () => {
+      }), g.on("complete", () => {
         D.value = !1, e.emitter.emit("vf-fetch", {
           params: { q: "index", adapter: e.data.adapter, path: e.data.dirname },
           noCloseModal: !0
         });
-      }), c.value.addEventListener("click", () => {
+      }), v.value.addEventListener("click", () => {
         d.value.click();
-      }), g.value.addEventListener("click", () => {
-        l.value.click();
-      }), _.value.addEventListener("dragover", (y) => {
+      }), h.value.addEventListener("click", () => {
+        i.value.click();
+      }), f.value.addEventListener("dragover", (y) => {
         y.preventDefault(), M.value = !0;
-      }), _.value.addEventListener("dragleave", (y) => {
+      }), f.value.addEventListener("dragleave", (y) => {
         y.preventDefault(), M.value = !1;
       });
       function x(y, $) {
@@ -2728,7 +2735,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           });
         });
       }
-      _.value.addEventListener("drop", (y) => {
+      f.value.addEventListener("drop", (y) => {
         y.preventDefault(), M.value = !1;
         const $ = /^[/\\](.+)/;
         [...y.dataTransfer.items].forEach((j) => {
@@ -2744,9 +2751,9 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           O(j);
         y.value = "";
       };
-      d.value.addEventListener("change", k), l.value.addEventListener("change", k);
+      d.value.addEventListener("change", k), i.value.addEventListener("change", k);
     }), ke(() => {
-      h == null || h.close({ reason: "unmount" });
+      g == null || g.close({ reason: "unmount" });
     }), (x, k) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
@@ -2754,82 +2761,82 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           class: N(["vf-btn vf-btn-primary", D.value ? "bg-blue-200 hover:bg-blue-200 dark:bg-gray-700/50 dark:hover:bg-gray-700/50 dark:text-gray-500" : "bg-blue-600 hover:bg-blue-700 dark:bg-gray-700 dark:hover:bg-gray-500"]),
           disabled: D.value,
           onClick: G(ee, ["prevent"])
-        }, v(a(s)("Upload")), 11, on),
-        D.value ? (n(), u("button", {
+        }, m(a(s)("Upload")), 11, on),
+        D.value ? (n(), c("button", {
           key: 0,
           type: "button",
           class: "vf-btn vf-btn-secondary",
           onClick: G(te, ["prevent"])
-        }, v(a(s)("Cancel")), 1)) : (n(), u("button", {
+        }, m(a(s)("Cancel")), 1)) : (n(), c("button", {
           key: 1,
           type: "button",
           class: "vf-btn vf-btn-secondary",
           onClick: G(ce, ["prevent"])
-        }, v(a(s)("Close")), 1))
+        }, m(a(s)("Close")), 1))
       ]),
       default: A(() => [
         t("div", Ur, [
           Br,
           t("div", zr, [
-            t("h3", Hr, v(a(s)("Upload Files")), 1),
+            t("h3", Hr, m(a(s)("Upload Files")), 1),
             t("div", Rr, [
               t("div", {
                 ref_key: "dropArea",
-                ref: _,
+                ref: f,
                 class: "flex items-center justify-center text-lg mb-4 text-gray-500 border-2 border-gray-300 rounded border-dashed select-none cursor-pointer dark:border-gray-600 h-[120px]",
                 onClick: Z
               }, [
-                M.value ? (n(), u("div", qr, v(a(s)("Release to drop these files.")), 1)) : (n(), u("div", Ir, v(a(s)("Drag and drop the files/folders to here or click here.")), 1))
+                M.value ? (n(), c("div", qr, m(a(s)("Release to drop these files.")), 1)) : (n(), c("div", Ir, m(a(s)("Drag and drop the files/folders to here or click here.")), 1))
               ], 512),
               t("div", {
                 ref_key: "container",
-                ref: m,
+                ref: u,
                 class: "text-gray-500 mb-1"
               }, [
                 t("button", {
                   ref_key: "pickFiles",
-                  ref: c,
+                  ref: v,
                   type: "button",
                   class: "vf-btn vf-btn-secondary"
-                }, v(a(s)("Select Files")), 513),
+                }, m(a(s)("Select Files")), 513),
                 t("button", {
                   ref_key: "pickFolders",
-                  ref: g,
+                  ref: h,
                   type: "button",
                   class: "vf-btn vf-btn-secondary"
-                }, v(a(s)("Select Folders")), 513),
+                }, m(a(s)("Select Folders")), 513),
                 t("button", {
                   type: "button",
                   class: "vf-btn vf-btn-secondary",
                   disabled: D.value,
                   onClick: k[0] || (k[0] = (y) => ae(!1))
-                }, v(a(s)("Clear all")), 9, Pr),
+                }, m(a(s)("Clear all")), 9, Pr),
                 t("button", {
                   type: "button",
                   class: "vf-btn vf-btn-secondary",
                   disabled: D.value,
                   onClick: k[1] || (k[1] = (y) => ae(!0))
-                }, v(a(s)("Clear only successful")), 9, Wr)
+                }, m(a(s)("Clear only successful")), 9, Wr)
               ], 512),
               t("div", Gr, [
-                (n(!0), u(U, null, q(S.value, (y) => (n(), u("div", {
+                (n(!0), c(U, null, q(S.value, (y) => (n(), c("div", {
                   class: "flex hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-300",
                   key: y.id
                 }, [
                   t("span", Yr, [
                     t("span", {
                       class: N(["text-base m-auto", z(y)]),
-                      textContent: v(Y(y))
+                      textContent: m(Y(y))
                     }, null, 10, Kr)
                   ]),
                   t("div", Jr, [
-                    t("div", Xr, v(a(he)(y.name, 40)) + " (" + v(y.size) + ")", 1),
-                    t("div", Qr, v(a(he)(y.name, 16)) + " (" + v(y.size) + ")", 1),
+                    t("div", Xr, m(a(he)(y.name, 40)) + " (" + m(y.size) + ")", 1),
+                    t("div", Qr, m(a(he)(y.name, 16)) + " (" + m(y.size) + ")", 1),
                     t("div", {
                       class: N(["flex break-all text-left", z(y)])
                     }, [
-                      T(v(y.statusName) + " ", 1),
-                      y.status === i.value.QUEUE_ENTRY_STATUS.UPLOADING ? (n(), u("b", Zr, v(y.percent), 1)) : E("", !0)
+                      T(m(y.statusName) + " ", 1),
+                      y.status === l.value.QUEUE_ENTRY_STATUS.UPLOADING ? (n(), c("b", Zr, m(y.percent), 1)) : E("", !0)
                     ], 2)
                   ]),
                   t("button", {
@@ -2840,7 +2847,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
                     onClick: ($) => se(y)
                   }, sn, 10, en)
                 ]))), 128)),
-                S.value.length ? E("", !0) : (n(), u("div", an, v(a(s)("No files selected!")), 1))
+                S.value.length ? E("", !0) : (n(), c("div", an, m(a(s)("No files selected!")), 1))
               ]),
               C.value.length ? (n(), L(W, {
                 key: 0,
@@ -2848,7 +2855,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(C.value), 1)
+                  T(m(C.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -2864,7 +2871,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         }, null, 512),
         t("input", {
           ref_key: "internalFolderInput",
-          ref: l,
+          ref: i,
           type: "file",
           multiple: "",
           webkitdirectory: "",
@@ -2929,8 +2936,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer");
     e.storage;
-    const { t: s } = e.i18n, r = b(""), o = b(""), i = b(e.modal.data.items), m = () => {
-      i.value.length && e.emitter.emit("vf-fetch", {
+    const { t: s } = e.i18n, r = b(""), o = b(""), l = b(e.modal.data.items), u = () => {
+      l.value.length && e.emitter.emit("vf-fetch", {
         params: {
           q: "archive",
           m: "post",
@@ -2938,7 +2945,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           path: e.data.dirname
         },
         body: {
-          items: i.value.map(({ path: d, type: l }) => ({ path: d, type: l })),
+          items: l.value.map(({ path: d, type: i }) => ({ path: d, type: i })),
           name: r.value
         },
         onSuccess: () => {
@@ -2949,34 +2956,34 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         }
       });
     };
-    return (d, l) => (n(), L(P, null, {
+    return (d, i) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: m,
+          onClick: u,
           class: "vf-btn vf-btn-primary"
-        }, v(a(s)("Archive")), 1),
+        }, m(a(s)("Archive")), 1),
         t("button", {
           type: "button",
-          onClick: l[2] || (l[2] = (c) => a(e).emitter.emit("vf-modal-close")),
+          onClick: i[2] || (i[2] = (v) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1)
+        }, m(a(s)("Cancel")), 1)
       ]),
       default: A(() => [
         t("div", ln, [
           dn,
           t("div", cn, [
-            t("h3", un, v(a(s)("Archive the files")), 1),
+            t("h3", un, m(a(s)("Archive the files")), 1),
             t("div", mn, [
               t("div", vn, [
-                (n(!0), u(U, null, q(i.value, (c) => (n(), u("p", pn, [
-                  c.type === "dir" ? (n(), u("svg", hn, gn)) : (n(), u("svg", _n, yn)),
-                  t("span", bn, v(c.basename), 1)
+                (n(!0), c(U, null, q(l.value, (v) => (n(), c("p", pn, [
+                  v.type === "dir" ? (n(), c("svg", hn, gn)) : (n(), c("svg", _n, yn)),
+                  t("span", bn, m(v.basename), 1)
                 ]))), 256))
               ]),
               R(t("input", {
-                "onUpdate:modelValue": l[0] || (l[0] = (c) => r.value = c),
-                onKeyup: J(m, ["enter"]),
+                "onUpdate:modelValue": i[0] || (i[0] = (v) => r.value = v),
+                onKeyup: J(u, ["enter"]),
                 class: "my-1 px-2 py-1 border rounded dark:bg-gray-700/25 dark:focus:ring-gray-600 dark:focus:border-gray-600 dark:text-gray-100 w-full",
                 placeholder: a(s)("Archive name. (.zip file will be created)"),
                 type: "text"
@@ -2985,11 +2992,11 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
               ]),
               o.value.length ? (n(), L(W, {
                 key: 0,
-                onHidden: l[1] || (l[1] = (c) => o.value = ""),
+                onHidden: i[1] || (i[1] = (v) => o.value = ""),
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(o.value), 1)
+                  T(m(o.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -3054,7 +3061,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     e.storage;
     const { t: s } = e.i18n;
     b("");
-    const r = b(e.modal.data.items[0]), o = b(""), i = b([]), m = () => {
+    const r = b(e.modal.data.items[0]), o = b(""), l = b([]), u = () => {
       e.emitter.emit("vf-fetch", {
         params: {
           q: "unarchive",
@@ -3073,37 +3080,37 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         }
       });
     };
-    return (d, l) => (n(), L(P, null, {
+    return (d, i) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: m,
+          onClick: u,
           class: "vf-btn vf-btn-primary"
-        }, v(a(s)("Unarchive")), 1),
+        }, m(a(s)("Unarchive")), 1),
         t("button", {
           type: "button",
-          onClick: l[1] || (l[1] = (c) => a(e).emitter.emit("vf-modal-close")),
+          onClick: i[1] || (i[1] = (v) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1)
+        }, m(a(s)("Cancel")), 1)
       ]),
       default: A(() => [
         t("div", Cn, [
           Sn,
           t("div", Mn, [
-            t("h3", En, v(a(s)("Unarchive")), 1),
+            t("h3", En, m(a(s)("Unarchive")), 1),
             t("div", Dn, [
-              (n(!0), u(U, null, q(i.value, (c) => (n(), u("p", jn, [
-                c.type === "dir" ? (n(), u("svg", An, Fn)) : (n(), u("svg", Tn, Vn)),
-                t("span", Nn, v(c.basename), 1)
+              (n(!0), c(U, null, q(l.value, (v) => (n(), c("p", jn, [
+                v.type === "dir" ? (n(), c("svg", An, Fn)) : (n(), c("svg", Tn, Vn)),
+                t("span", Nn, m(v.basename), 1)
               ]))), 256)),
-              t("p", Un, v(a(s)("The archive will be unarchived at")) + " (" + v(d.current.dirname) + ")", 1),
+              t("p", Un, m(a(s)("The archive will be unarchived at")) + " (" + m(d.current.dirname) + ")", 1),
               o.value.length ? (n(), L(W, {
                 key: 0,
-                onHidden: l[0] || (l[0] = (c) => o.value = ""),
+                onHidden: i[0] || (i[0] = (v) => o.value = ""),
                 error: ""
               }, {
                 default: A(() => [
-                  T(v(o.value), 1)
+                  T(m(o.value), 1)
                 ]),
                 _: 1
               })) : E("", !0)
@@ -3180,7 +3187,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer"), { t: s } = e.i18n;
     e.storage;
-    const r = b(e.modal.data.items.from), o = b(""), i = () => {
+    const r = b(e.modal.data.items.from), o = b(""), l = () => {
       r.value.length && e.emitter.emit("vf-fetch", {
         params: {
           q: "move",
@@ -3189,57 +3196,57 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           path: e.data.dirname
         },
         body: {
-          items: r.value.map(({ path: m, type: d }) => ({ path: m, type: d })),
+          items: r.value.map(({ path: u, type: d }) => ({ path: u, type: d })),
           item: e.modal.data.items.to.path
         },
         onSuccess: () => {
           e.emitter.emit("vf-toast-push", { label: s("Files moved.", e.modal.data.items.to.name) });
         },
-        onError: (m) => {
-          o.value = s(m.message);
+        onError: (u) => {
+          o.value = s(u.message);
         }
       });
     };
-    return (m, d) => (n(), L(P, null, {
+    return (u, d) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: i,
+          onClick: l,
           class: "vf-btn vf-btn-primary"
-        }, v(a(s)("Yes, Move!")), 1),
+        }, m(a(s)("Yes, Move!")), 1),
         t("button", {
           type: "button",
-          onClick: d[1] || (d[1] = (l) => a(e).emitter.emit("vf-modal-close")),
+          onClick: d[1] || (d[1] = (i) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(s)("Cancel")), 1),
-        t("div", rl, v(a(s)("%s item(s) selected.", r.value.length)), 1)
+        }, m(a(s)("Cancel")), 1),
+        t("div", rl, m(a(s)("%s item(s) selected.", r.value.length)), 1)
       ]),
       default: A(() => [
         t("div", Hn, [
           Rn,
           t("div", qn, [
-            t("h3", In, v(a(s)("Move files")), 1),
-            t("p", Pn, v(a(s)("Are you sure you want to move these files?")), 1),
+            t("h3", In, m(a(s)("Move files")), 1),
+            t("p", Pn, m(a(s)("Are you sure you want to move these files?")), 1),
             t("div", Wn, [
-              (n(!0), u(U, null, q(r.value, (l) => (n(), u("div", Gn, [
+              (n(!0), c(U, null, q(r.value, (i) => (n(), c("div", Gn, [
                 t("div", null, [
-                  l.type === "dir" ? (n(), u("svg", Yn, Jn)) : (n(), u("svg", Xn, Zn))
+                  i.type === "dir" ? (n(), c("svg", Yn, Jn)) : (n(), c("svg", Xn, Zn))
                 ]),
-                t("div", el, v(l.path), 1)
+                t("div", el, m(i.path), 1)
               ]))), 256))
             ]),
-            t("h4", tl, v(a(s)("Target Directory")), 1),
+            t("h4", tl, m(a(s)("Target Directory")), 1),
             t("p", sl, [
               al,
-              t("span", ol, v(a(e).modal.data.items.to.path), 1)
+              t("span", ol, m(a(e).modal.data.items.to.path), 1)
             ]),
             o.value.length ? (n(), L(W, {
               key: 0,
-              onHidden: d[0] || (d[0] = (l) => o.value = ""),
+              onHidden: d[0] || (d[0] = (i) => o.value = ""),
               error: ""
             }, {
               default: A(() => [
-                T(v(o.value), 1)
+                T(m(o.value), 1)
               ]),
               _: 1
             })) : E("", !0)
@@ -3259,28 +3266,28 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     on: { type: String, required: !0 }
   },
   setup(p, { emit: e, slots: s }) {
-    const r = F("ServiceContainer"), o = b(!1), { t: i } = r.i18n;
-    let m = null;
+    const r = F("ServiceContainer"), o = b(!1), { t: l } = r.i18n;
+    let u = null;
     const d = () => {
-      clearTimeout(m), o.value = !0, m = setTimeout(() => {
+      clearTimeout(u), o.value = !0, u = setTimeout(() => {
         o.value = !1;
       }, 2e3);
     };
     return I(() => {
       r.emitter.on(p.on, d);
     }), Fe(() => {
-      clearTimeout(m);
+      clearTimeout(u);
     }), {
       shown: o,
-      t: i
+      t: l
     };
   }
 }, cl = { key: 1 };
-function ul(p, e, s, r, o, i) {
-  return n(), u("div", {
+function ul(p, e, s, r, o, l) {
+  return n(), c("div", {
     class: N(["text-sm text-green-600 dark:text-green-600 transition-opacity duration-500 ease-out", [{ "opacity-0": !r.shown }]])
   }, [
-    p.$slots.default ? ne(p.$slots, "default", { key: 0 }) : (n(), u("span", cl, v(r.t("Saved.")), 1))
+    p.$slots.default ? ne(p.$slots, "default", { key: 0 }) : (n(), c("span", cl, m(r.t("Saved.")), 1))
   ], 2);
 }
 const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:items-start" }, vl = /* @__PURE__ */ t("div", { class: "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-50 dark:bg-gray-500 sm:mx-0 sm:h-10 sm:w-10" }, [
@@ -3322,15 +3329,15 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
   name: "VFModalAbout"
 }, Ul = /* @__PURE__ */ Object.assign(Nl, {
   setup(p) {
-    const e = F("ServiceContainer"), { getStore: s, setStore: r, clearStore: o } = e.storage, { t: i, changeLocale: m, locale: d } = e.i18n;
+    const e = F("ServiceContainer"), { getStore: s, setStore: r, clearStore: o } = e.storage, { t: l, changeLocale: u, locale: d } = e.i18n;
     b(""), b("");
-    const l = async () => {
+    const i = async () => {
       o(), location.reload();
-    }, c = (M) => {
+    }, v = (M) => {
       e.theme.set(M), e.emitter.emit("vf-theme-saved");
-    }, g = () => {
+    }, h = () => {
       e.metricUnits = !e.metricUnits, e.filesize = e.metricUnits ? xe : be, r("metricUnits", e.metricUnits), e.emitter.emit("vf-metric-units-saved");
-    }, { i18n: _ } = F("VueFinderOptions"), C = Object.fromEntries(
+    }, { i18n: f } = F("VueFinderOptions"), C = Object.fromEntries(
       Object.entries({
         en: "English",
         fr: "French (Français)",
@@ -3343,29 +3350,29 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
         tr: "Turkish (Türkçe)",
         zhCN: "Simplified Chinese (简体中文)",
         zhTW: "Traditional Chinese (繁體中文)"
-      }).filter(([M]) => Object.keys(_).includes(M))
+      }).filter(([M]) => Object.keys(f).includes(M))
     ), D = Q(() => ({
-      system: i("System"),
-      light: i("Light"),
-      dark: i("Dark")
+      system: l("System"),
+      light: l("Light"),
+      dark: l("Dark")
     }));
-    return (M, h) => (n(), L(P, null, {
+    return (M, g) => (n(), L(P, null, {
       buttons: A(() => [
         t("button", {
           type: "button",
-          onClick: h[5] || (h[5] = (f) => a(e).emitter.emit("vf-modal-close")),
+          onClick: g[5] || (g[5] = (_) => a(e).emitter.emit("vf-modal-close")),
           class: "vf-btn vf-btn-secondary"
-        }, v(a(i)("Close")), 1)
+        }, m(a(l)("Close")), 1)
       ]),
       default: A(() => [
         t("div", ml, [
           vl,
           t("div", pl, [
-            t("h3", hl, v(a(i)("About %s", "Vuefinder " + a(e).version)), 1),
+            t("h3", hl, m(a(l)("About %s", "Vuefinder " + a(e).version)), 1),
             t("div", fl, [
-              t("p", gl, v(a(i)("Vuefinder is a file manager component for vue 3.")), 1),
+              t("p", gl, m(a(l)("Vuefinder is a file manager component for vue 3.")), 1),
               t("div", null, [
-                t("h3", _l, v(a(i)("Settings")), 1)
+                t("h3", _l, m(a(l)("Settings")), 1)
               ]),
               t("div", kl, [
                 t("fieldset", null, [
@@ -3376,8 +3383,8 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
                           id: "metric_unit",
                           name: "metric_unit",
                           type: "checkbox",
-                          "onUpdate:modelValue": h[0] || (h[0] = (f) => a(e).metricUnits = f),
-                          onClick: g,
+                          "onUpdate:modelValue": g[0] || (g[0] = (_) => a(e).metricUnits = _),
+                          onClick: h,
                           class: "h-4 w-4 rounded border-gray-300 text-indigo-600 dark:accent-slate-400 focus:ring-indigo-600"
                         }, null, 512), [
                           [Te, a(e).metricUnits]
@@ -3385,13 +3392,13 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
                       ]),
                       t("div", wl, [
                         t("label", $l, [
-                          T(v(a(i)("Use Metric Units")) + " ", 1),
+                          T(m(a(l)("Use Metric Units")) + " ", 1),
                           B(ve, {
                             class: "ms-3",
                             on: "vf-metric-units-saved"
                           }, {
                             default: A(() => [
-                              T(v(a(i)("Saved.")), 1)
+                              T(m(a(l)("Saved.")), 1)
                             ]),
                             _: 1
                           })
@@ -3400,19 +3407,19 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
                     ]),
                     t("div", Cl, [
                       t("div", Sl, [
-                        t("label", Ml, v(a(i)("Theme")), 1)
+                        t("label", Ml, m(a(l)("Theme")), 1)
                       ]),
                       t("div", El, [
                         R(t("select", {
                           id: "theme",
-                          "onUpdate:modelValue": h[1] || (h[1] = (f) => a(e).theme.value = f),
-                          onChange: h[2] || (h[2] = (f) => c(f.target.value)),
+                          "onUpdate:modelValue": g[1] || (g[1] = (_) => a(e).theme.value = _),
+                          onChange: g[2] || (g[2] = (_) => v(_.target.value)),
                           class: "flex-shrink-0 w-full text-sm text-slate-500 border dark:border-gray-600 dark:text-neutral-50 dark:bg-gray-700 rounded"
                         }, [
                           t("optgroup", {
-                            label: a(i)("Theme")
+                            label: a(l)("Theme")
                           }, [
-                            (n(!0), u(U, null, q(D.value, (f, O) => (n(), u("option", { value: O }, v(f), 9, jl))), 256))
+                            (n(!0), c(U, null, q(D.value, (_, O) => (n(), c("option", { value: O }, m(_), 9, jl))), 256))
                           ], 8, Dl)
                         ], 544), [
                           [pe, a(e).theme.value]
@@ -3422,27 +3429,27 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
                           on: "vf-theme-saved"
                         }, {
                           default: A(() => [
-                            T(v(a(i)("Saved.")), 1)
+                            T(m(a(l)("Saved.")), 1)
                           ]),
                           _: 1
                         })
                       ])
                     ]),
-                    a(e).features.includes(a(V).LANGUAGE) && Object.keys(a(C)).length > 1 ? (n(), u("div", Al, [
+                    a(e).features.includes(a(V).LANGUAGE) && Object.keys(a(C)).length > 1 ? (n(), c("div", Al, [
                       t("div", Ll, [
-                        t("label", Fl, v(a(i)("Language")), 1)
+                        t("label", Fl, m(a(l)("Language")), 1)
                       ]),
                       t("div", Tl, [
                         R(t("select", {
                           id: "language",
-                          "onUpdate:modelValue": h[3] || (h[3] = (f) => _e(d) ? d.value = f : null),
-                          onChange: h[4] || (h[4] = (f) => a(m)(f.target.value)),
+                          "onUpdate:modelValue": g[3] || (g[3] = (_) => _e(d) ? d.value = _ : null),
+                          onChange: g[4] || (g[4] = (_) => a(u)(_.target.value)),
                           class: "flex-shrink-0 w-1/2 sm:w-full text-sm text-slate-500 border dark:border-gray-600 dark:text-neutral-50 dark:bg-gray-700 rounded"
                         }, [
                           t("optgroup", {
-                            label: a(i)("Language")
+                            label: a(l)("Language")
                           }, [
-                            (n(!0), u(U, null, q(a(C), (f, O) => (n(), u("option", { value: O }, v(f), 9, Vl))), 256))
+                            (n(!0), c(U, null, q(a(C), (_, O) => (n(), c("option", { value: O }, m(_), 9, Vl))), 256))
                           ], 8, Ol)
                         ], 544), [
                           [pe, a(d)]
@@ -3452,17 +3459,17 @@ const ve = /* @__PURE__ */ il(dl, [["render", ul]]), ml = { class: "sm:flex sm:i
                           on: "vf-language-saved"
                         }, {
                           default: A(() => [
-                            T(v(a(i)("Saved.")), 1)
+                            T(m(a(l)("Saved.")), 1)
                           ]),
                           _: 1
                         })
                       ])
                     ])) : E("", !0),
                     t("button", {
-                      onClick: l,
+                      onClick: i,
                       type: "button",
                       class: "vf-btn vf-btn-secondary"
-                    }, v(a(i)("Reset Settings")), 1)
+                    }, m(a(l)("Reset Settings")), 1)
                   ])
                 ])
               ])

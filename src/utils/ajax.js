@@ -186,6 +186,7 @@ export class Requester {
      * @throws {Record<String,?String>|null} resp json error
      */
     async send(input) {
+        if (this.config.customRequest) return this.config.customRequest(input)
         const reqParams = this.transformRequestParams(input);
         const responseType = input.responseType || 'json';
         /** @type {RequestInit} */
@@ -229,6 +230,7 @@ export function buildRequester(userConfig) {
         params: {},
         body: {},
         xsrfHeaderName: 'X-CSRF-Token',
+        xhrOptions: {}
     };
     if (typeof userConfig === 'string') {
         Object.assign(config, { baseUrl: userConfig });
@@ -238,4 +240,4 @@ export function buildRequester(userConfig) {
     return new Requester(config);
 }
 
-export {}
+export { }

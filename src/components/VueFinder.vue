@@ -38,7 +38,7 @@ import VFExplorer from '../components/Explorer.vue';
 import VFContextMenu from '../components/ContextMenu.vue';
 import VFStatusbar from '../components/Statusbar.vue';
 
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select', 'open'])
 
 const props = defineProps({
   id: {
@@ -172,11 +172,12 @@ app.emitter.on('vf-fetch', ({params, body = null, onSuccess = null, onError = nu
       app.emitter.emit('vf-modal-close');
     }
     updateItems(data);
+    emit('open', data.dirname)
+    
     if (onSuccess) {
       onSuccess(data);
     }
   }).catch((e) => {
-    console.error(e)
     if (onError) {
       onError(e);
     }

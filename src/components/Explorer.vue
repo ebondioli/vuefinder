@@ -346,12 +346,10 @@ const setDragSelect = () => {
 };
 
 function playVideoPreview(event) {
-  console.log(event)
   event.target.play()
 }
 
 function pauseVideoPreview(event) {
-  console.log(event)
   event.target.pause()
   event.target.currentTime = 0
 }

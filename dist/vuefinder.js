@@ -977,17 +977,17 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
   setup(p) {
     const e = F("ServiceContainer"), { t: s } = e.i18n;
     e.storage;
-    const r = (w) => w == null ? void 0 : w.substring(0, 3), o = b(null), l = b(null), u = b(0), d = b(null), i = Math.floor(Math.random() * 2 ** 32), v = b("");
+    const r = ($) => $ == null ? void 0 : $.substring(0, 3), o = b(null), l = b(null), u = b(0), d = b(null), i = Math.floor(Math.random() * 2 ** 32), v = b("");
     let h;
     e.emitter.on("vf-fullscreen-toggle", () => {
       o.value.style.height = null;
-    }), e.emitter.on("vf-search-query", ({ newQuery: w }) => {
-      v.value = w, w ? e.emitter.emit("vf-fetch", {
+    }), e.emitter.on("vf-search-query", ({ newQuery: $ }) => {
+      v.value = $, $ ? e.emitter.emit("vf-fetch", {
         params: {
           q: "search",
           adapter: e.data.adapter,
           path: e.data.dirname,
-          filter: w
+          filter: $
         },
         onSuccess: (x) => {
           x.files.length || e.emitter.emit("vf-toast-push", { label: s("No search result found.") });
@@ -997,9 +997,9 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     let f = null;
     const S = () => {
       f && clearTimeout(f);
-    }, C = b(!0), D = (w) => {
-      w.touches.length > 1 && (C.value ? (d.value.stop(), e.emitter.emit("vf-toast-push", { label: s("Drag&Drop: off") })) : (d.value.start(), e.emitter.emit("vf-toast-push", { label: s("Drag&Drop: on") }), e.emitter.emit("vf-explorer-update")), C.value = !C.value);
-    }, M = (w) => {
+    }, C = b(!0), D = ($) => {
+      $.touches.length > 1 && (C.value ? (d.value.stop(), e.emitter.emit("vf-toast-push", { label: s("Drag&Drop: off") })) : (d.value.start(), e.emitter.emit("vf-toast-push", { label: s("Drag&Drop: on") }), e.emitter.emit("vf-explorer-update")), C.value = !C.value);
+    }, M = ($) => {
       f = setTimeout(() => {
         const x = new MouseEvent("contextmenu", {
           bubbles: !0,
@@ -1007,35 +1007,35 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           view: window,
           button: 2,
           buttons: 0,
-          clientX: w.target.getBoundingClientRect().x,
-          clientY: w.target.getBoundingClientRect().y
+          clientX: $.target.getBoundingClientRect().x,
+          clientY: $.target.getBoundingClientRect().y
         });
-        w.target.dispatchEvent(x);
+        $.target.dispatchEvent(x);
       }, 500);
-    }, g = (w) => {
-      w.type === "dir" ? (e.emitter.emit("vf-search-exit"), e.emitter.emit("vf-fetch", { params: { q: "index", adapter: e.data.adapter, path: w.path } })) : e.emitter.emit("vf-modal-show", { type: "preview", adapter: e.data.adapter, item: w });
-    }, _ = le({ active: !1, column: "", order: "" }), O = (w = !0) => {
+    }, g = ($) => {
+      $.type === "dir" ? (e.emitter.emit("vf-search-exit"), e.emitter.emit("vf-fetch", { params: { q: "index", adapter: e.data.adapter, path: $.path } })) : e.emitter.emit("vf-modal-show", { type: "preview", adapter: e.data.adapter, item: $ });
+    }, _ = le({ active: !1, column: "", order: "" }), O = ($ = !0) => {
       let x = [...e.data.files], k = _.column, y = _.order == "asc" ? 1 : -1;
-      if (!w)
+      if (!$)
         return x;
-      const $ = (j, H) => typeof j == "string" && typeof H == "string" ? j.toLowerCase().localeCompare(H.toLowerCase()) : j < H ? -1 : j > H ? 1 : 0;
-      return _.active && (x = x.slice().sort((j, H) => $(j[k], H[k]) * y)), x;
-    }, z = (w) => {
-      _.active && _.column == w ? (_.active = _.order == "asc", _.column = w, _.order = "desc") : (_.active = !0, _.column = w, _.order = "asc");
-    }, Y = () => d.value.getSelection().map((w) => JSON.parse(w.dataset.item)), Z = (w, x) => {
-      if (w.altKey || w.ctrlKey || w.metaKey)
-        return w.preventDefault(), !1;
-      w.dataTransfer.setDragImage(l.value, 0, 15), w.dataTransfer.effectAllowed = "all", w.dataTransfer.dropEffect = "copy", w.dataTransfer.setData("items", JSON.stringify(Y()));
-    }, ee = (w, x) => {
-      w.preventDefault();
-      let k = JSON.parse(w.dataTransfer.getData("items"));
+      const w = (j, H) => typeof j == "string" && typeof H == "string" ? j.toLowerCase().localeCompare(H.toLowerCase()) : j < H ? -1 : j > H ? 1 : 0;
+      return _.active && (x = x.slice().sort((j, H) => w(j[k], H[k]) * y)), x;
+    }, z = ($) => {
+      _.active && _.column == $ ? (_.active = _.order == "asc", _.column = $, _.order = "desc") : (_.active = !0, _.column = $, _.order = "asc");
+    }, Y = () => d.value.getSelection().map(($) => JSON.parse($.dataset.item)), Z = ($, x) => {
+      if ($.altKey || $.ctrlKey || $.metaKey)
+        return $.preventDefault(), !1;
+      $.dataTransfer.setDragImage(l.value, 0, 15), $.dataTransfer.effectAllowed = "all", $.dataTransfer.dropEffect = "copy", $.dataTransfer.setData("items", JSON.stringify(Y()));
+    }, ee = ($, x) => {
+      $.preventDefault();
+      let k = JSON.parse($.dataTransfer.getData("items"));
       if (k.find((y) => y.storage !== e.adapter)) {
         alert("Moving items between different storages is not supported yet.");
         return;
       }
       e.emitter.emit("vf-modal-show", { type: "move", items: { from: k, to: x } });
-    }, te = (w, x) => {
-      w.preventDefault(), !x || x.type !== "dir" || d.value.getSelection().find((k) => k == w.currentTarget) ? (w.dataTransfer.dropEffect = "none", w.dataTransfer.effectAllowed = "none") : w.dataTransfer.dropEffect = "copy";
+    }, te = ($, x) => {
+      $.preventDefault(), !x || x.type !== "dir" || d.value.getSelection().find((k) => k == $.currentTarget) ? ($.dataTransfer.dropEffect = "none", $.dataTransfer.effectAllowed = "none") : $.dataTransfer.dropEffect = "copy";
     }, se = () => {
       d.value = new Ve({
         area: o.value,
@@ -1046,24 +1046,24 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         d.value.clearSelection(), d.value.setSettings({
           selectables: document.getElementsByClassName("vf-item-" + i)
         });
-      })), d.value.subscribe("predragstart", ({ event: w, isDragging: x }) => {
+      })), d.value.subscribe("predragstart", ({ event: $, isDragging: x }) => {
         if (x)
           u.value = d.value.getSelection().length, d.value.break();
         else {
-          const k = w.target.offsetWidth - w.offsetX, y = w.target.offsetHeight - w.offsetY;
+          const k = $.target.offsetWidth - $.offsetX, y = $.target.offsetHeight - $.offsetY;
           k < 15 && y < 15 && (d.value.clearSelection(), d.value.break());
         }
-      }), d.value.subscribe("predragmove", ({ isDragging: w }) => {
-        w && d.value.break();
-      }), d.value.subscribe("callback", ({ items: w, event: x, isDragging: k }) => {
+      }), d.value.subscribe("predragmove", ({ isDragging: $ }) => {
+        $ && d.value.break();
+      }), d.value.subscribe("callback", ({ items: $, event: x, isDragging: k }) => {
         e.emitter.emit("vf-nodes-selected", Y()), u.value = d.value.getSelection().length;
       });
     };
-    function ae(w) {
-      console.log(w), w.target.play();
+    function ae($) {
+      $.target.play();
     }
-    function ce(w) {
-      console.log(w), w.target.pause(), w.target.currentTime = 0;
+    function ce($) {
+      $.target.pause(), $.target.currentTime = 0;
     }
     return I(() => {
       h = new Ne(o.value), se();
@@ -1073,7 +1073,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       ie(() => e.view, () => e.emitter.emit("vf-explorer-update"));
     }), ke(() => {
       h.destroy();
-    }), (w, x) => (n(), c("div", bs, [
+    }), ($, x) => (n(), c("div", bs, [
       a(e).view == "list" || v.value.length ? (n(), c("div", xs, [
         t("div", {
           onClick: x[0] || (x[0] = (k) => z("basename")),
@@ -1141,10 +1141,10 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         ref: o
       }, [
         v.value.length ? (n(!0), c(U, { key: 0 }, q(O(), (k, y) => (n(), c("div", {
-          onDblclick: ($) => g(k),
-          onTouchstart: x[4] || (x[4] = ($) => M($)),
-          onTouchend: x[5] || (x[5] = ($) => S()),
-          onContextmenu: G(($) => a(e).emitter.emit("vf-contextmenu-show", { event: $, area: o.value, items: Y(), target: k }), ["prevent"]),
+          onDblclick: (w) => g(k),
+          onTouchstart: x[4] || (x[4] = (w) => M(w)),
+          onTouchend: x[5] || (x[5] = (w) => S()),
+          onContextmenu: G((w) => a(e).emitter.emit("vf-contextmenu-show", { event: w, area: o.value, items: Y(), target: k }), ["prevent"]),
           class: N(["vf-item-" + a(i), "grid grid-cols-1 border hover:bg-neutral-50 dark:hover:bg-gray-700 border-transparent my-0.5 w-full select-none"]),
           "data-type": k.type,
           "data-item": JSON.stringify(k),
@@ -1160,13 +1160,13 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         ], 42, Ss))), 256)) : E("", !0),
         a(e).view === "list" && !v.value.length ? (n(!0), c(U, { key: 1 }, q(O(), (k, y) => (n(), c("div", {
           draggable: "true",
-          onDblclick: ($) => g(k),
-          onTouchstart: x[6] || (x[6] = ($) => M($)),
-          onTouchend: x[7] || (x[7] = ($) => S()),
-          onContextmenu: G(($) => a(e).emitter.emit("vf-contextmenu-show", { event: $, area: o.value, items: Y(), target: k }), ["prevent"]),
-          onDragstart: ($) => Z($),
-          onDragover: ($) => te($, k),
-          onDrop: ($) => ee($, k),
+          onDblclick: (w) => g(k),
+          onTouchstart: x[6] || (x[6] = (w) => M(w)),
+          onTouchend: x[7] || (x[7] = (w) => S()),
+          onContextmenu: G((w) => a(e).emitter.emit("vf-contextmenu-show", { event: w, area: o.value, items: Y(), target: k }), ["prevent"]),
+          onDragstart: (w) => Z(w),
+          onDragover: (w) => te(w, k),
+          onDrop: (w) => ee(w, k),
           class: N(["vf-item-" + a(i), "grid grid-cols-1 border hover:bg-neutral-50 dark:hover:bg-gray-700 border-transparent my-0.5 w-full select-none"]),
           "data-type": k.type,
           "data-item": JSON.stringify(k),
@@ -1183,13 +1183,13 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         ], 42, Ns))), 256)) : E("", !0),
         a(e).view === "grid" && !v.value.length ? (n(!0), c(U, { key: 2 }, q(O(!1), (k, y) => (n(), c("div", {
           draggable: "true",
-          onDblclick: ($) => g(k),
-          onTouchstart: x[8] || (x[8] = ($) => M($)),
-          onTouchend: x[9] || (x[9] = ($) => S()),
-          onContextmenu: G(($) => a(e).emitter.emit("vf-contextmenu-show", { event: $, area: o.value, items: Y(), target: k }), ["prevent"]),
-          onDragstart: ($) => Z($),
-          onDragover: ($) => te($, k),
-          onDrop: ($) => ee($, k),
+          onDblclick: (w) => g(k),
+          onTouchstart: x[8] || (x[8] = (w) => M(w)),
+          onTouchend: x[9] || (x[9] = (w) => S()),
+          onContextmenu: G((w) => a(e).emitter.emit("vf-contextmenu-show", { event: w, area: o.value, items: Y(), target: k }), ["prevent"]),
+          onDragstart: (w) => Z(w),
+          onDragover: (w) => te(w, k),
+          onDrop: (w) => ee(w, k),
           class: N(["vf-item-" + a(i), "border border-transparent hover:bg-neutral-50 m-1 dark:hover:bg-gray-700 inline-flex w-[5.5rem] h-20 md:w-24 text-center justify-center select-none"]),
           "data-type": k.type,
           "data-item": JSON.stringify(k),
@@ -2643,7 +2643,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
     function ce() {
       e.emitter.emit("vf-modal-close");
     }
-    function w() {
+    function $() {
       return e.requester.transformRequestParams({
         url: "",
         method: "post",
@@ -2659,8 +2659,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           //allowedFileTypes
         },
         locale: r,
-        onBeforeFileAdded(y, $) {
-          if ($[y.id] != null) {
+        onBeforeFileAdded(y, w) {
+          if (w[y.id] != null) {
             const H = _(y.id);
             S.value[H].status === o.PENDING && (C.value = g.i18n("noDuplicates", { fileName: y.name })), S.value = S.value.filter((ue) => ue.id !== y.id);
           }
@@ -2678,7 +2678,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
         endpoint: "WILL_BE_REPLACED_BEFORE_UPLOAD",
         limit: 5,
         timeout: 0,
-        getResponseError(y, $) {
+        getResponseError(y, w) {
           let j;
           try {
             j = JSON.parse(y).message;
@@ -2688,27 +2688,27 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
           return new Error(j);
         },
         ...e.requester.config.xhrOptions
-      }), g.on("restriction-failed", (y, $) => {
+      }), g.on("restriction-failed", (y, w) => {
         const j = S.value[_(y.id)];
-        se(j), C.value = $.message;
+        se(j), C.value = w.message;
       }), g.on("upload", async () => {
-        const y = w();
+        const y = $();
         g.setMeta({ ...y.body }), e.requester.config.xhrOptions.setUploadFileState && g.getFiles().forEach((j) => {
           g.setFileState(j.id, e.requester.config.xhrOptions.setUploadFileState(j, y));
         });
-        const $ = g.getPlugin("XHRUpload");
-        $.opts.method = y.method, $.opts.endpoint = y.url + "?" + new URLSearchParams(y.params), $.opts.headers = y.headers, D.value = !0, S.value.forEach((j) => {
+        const w = g.getPlugin("XHRUpload");
+        w.opts.method = y.method, w.opts.endpoint = y.url + "?" + new URLSearchParams(y.params), w.opts.headers = y.headers, D.value = !0, S.value.forEach((j) => {
           j.status !== o.DONE && (j.percent = null, j.status = o.UPLOADING, j.statusName = s("Pending upload"));
         });
-      }), g.on("upload-progress", (y, $) => {
-        const j = Math.floor($.bytesUploaded / $.bytesTotal * 100);
+      }), g.on("upload-progress", (y, w) => {
+        const j = Math.floor(w.bytesUploaded / w.bytesTotal * 100);
         S.value[_(y.id)].percent = `${j}%`;
       }), g.on("upload-success", (y) => {
-        const $ = S.value[_(y.id)];
-        $.status = o.DONE, $.statusName = s("Done");
-      }), g.on("upload-error", (y, $) => {
+        const w = S.value[_(y.id)];
+        w.status = o.DONE, w.statusName = s("Done");
+      }), g.on("upload-error", (y, w) => {
         const j = S.value[_(y.id)];
-        j.percent = null, j.status = o.ERROR, $.isNetworkError ? j.statusName = s("Network Error, Unable establish connection to the server or interrupted.") : j.statusName = $ ? $.message : s("Unknown Error");
+        j.percent = null, j.status = o.ERROR, w.isNetworkError ? j.statusName = s("Network Error, Unable establish connection to the server or interrupted.") : j.statusName = w ? w.message : s("Unknown Error");
       }), g.on("error", (y) => {
         C.value = y.message, D.value = !1, e.emitter.emit("vf-fetch", {
           params: { q: "index", adapter: e.data.adapter, path: e.data.dirname },
@@ -2728,8 +2728,8 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       }), f.value.addEventListener("dragleave", (y) => {
         y.preventDefault(), M.value = !1;
       });
-      function x(y, $) {
-        $.isFile && $.file((j) => y($, j)), $.isDirectory && $.createReader().readEntries((j) => {
+      function x(y, w) {
+        w.isFile && w.file((j) => y(w, j)), w.isDirectory && w.createReader().readEntries((j) => {
           j.forEach((H) => {
             x(y, H);
           });
@@ -2737,17 +2737,17 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
       }
       f.value.addEventListener("drop", (y) => {
         y.preventDefault(), M.value = !1;
-        const $ = /^[/\\](.+)/;
+        const w = /^[/\\](.+)/;
         [...y.dataTransfer.items].forEach((j) => {
           j.kind === "file" && x((H, ue) => {
-            const $e = $.exec(H.fullPath);
+            const $e = w.exec(H.fullPath);
             O(ue, $e[1]);
           }, j.webkitGetAsEntry());
         });
       });
       const k = ({ target: y }) => {
-        const $ = y.files;
-        for (const j of $)
+        const w = y.files;
+        for (const j of w)
           O(j);
         y.value = "";
       };
@@ -2844,7 +2844,7 @@ const bs = { class: "relative flex-auto flex flex-col overflow-hidden" }, xs = {
                     class: N(["rounded w-5 h-5 border-1 text-base leading-none font-medium focus:outline-none dark:border-gray-200 dark:text-gray-400 dark:hover:text-gray-200 dark:bg-gray-600 ml-auto sm:text-xs hover:text-red-600", D.value ? "disabled:bg-gray-100 text-white text-opacity-50" : "bg-gray-100"]),
                     title: a(s)("Delete"),
                     disabled: D.value,
-                    onClick: ($) => se(y)
+                    onClick: (w) => se(y)
                   }, sn, 10, en)
                 ]))), 128)),
                 S.value.length ? E("", !0) : (n(), c("div", an, m(a(s)("No files selected!")), 1))

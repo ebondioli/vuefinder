@@ -1,19 +1,20 @@
 <template>
   <v-f-modal-layout>
     <div class="sm:flex sm:items-start">
-      <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-50 dark:bg-gray-500 sm:mx-0 sm:h-10 sm:w-10">
-         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-blue-600 dark:stroke-blue-100" fill="none" viewBox="0 0 24 24" stroke="none" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-          </svg>
+      <div
+        class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-50 dark:bg-gray-500 sm:mx-0 sm:h-10 sm:w-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-blue-600 dark:stroke-blue-100" fill="none"
+          viewBox="0 0 24 24" stroke="none" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        </svg>
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-400" id="modal-title">{{ t('Upload Files') }}</h3>
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-400" id="modal-title">{{ t('Upload Files')
+        }}</h3>
         <div class="mt-2">
-          <div
-            ref="dropArea"
-            class="flex items-center justify-center text-lg mb-4 text-gray-500 border-2 border-gray-300 rounded border-dashed select-none cursor-pointer
-              dark:border-gray-600 h-[120px]"
-            @click="openFileSelector">
+          <div ref="dropArea" class="flex items-center justify-center text-lg mb-4 text-gray-500 border-2 border-gray-300 rounded border-dashed select-none cursor-pointer
+              dark:border-gray-600 h-[120px]" @click="openFileSelector">
             <div class="pointer-events-none" v-if="hasFilesInDropArea">
               {{ t('Release to drop these files.') }}
             </div>
@@ -40,38 +41,38 @@
             </button>
           </div>
           <div class="text-gray-500 text-sm mb-1 pr-1 max-h-[200px] overflow-y-auto vf-scrollbar">
-            <div class="flex   hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-300" :key="entry.id" v-for="entry in queue">
+            <div class="flex   hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-300" :key="entry.id"
+              v-for="entry in queue">
               <span class="rounded flex flex-shrink-0 w-6 h-6 border bg-gray-50 text-xs cursor-default
                   dark:border-gray-700 dark:bg-gray-800 dark:text-gray-50
                   ">
-                <span class="text-base m-auto"
-                      :class="getClassNameForEntry(entry)"
-                      v-text="getIconForEntry(entry)"></span>
+                <span class="text-base m-auto" :class="getClassNameForEntry(entry)"
+                  v-text="getIconForEntry(entry)"></span>
               </span>
               <div class="ml-1 w-full h-fit">
                 <div class="text-left hidden md:block">{{ title_shorten(entry.name, 40) }} ({{ entry.size }})</div>
                 <div class="text-left md:hidden">{{ title_shorten(entry.name, 16) }} ({{ entry.size }})</div>
                 <div class="flex break-all text-left" :class="getClassNameForEntry(entry)"> {{ entry.statusName }}
-                  <b class="ml-auto" v-if="entry.status === definitions.QUEUE_ENTRY_STATUS.UPLOADING">{{ entry.percent }}</b>
+                  <b class="ml-auto" v-if="entry.status === definitions.QUEUE_ENTRY_STATUS.UPLOADING">{{ entry.percent
+                  }}</b>
                 </div>
               </div>
-              <button
-                type="button"
-                class="rounded w-5 h-5 border-1 text-base leading-none font-medium
+              <button type="button" class="rounded w-5 h-5 border-1 text-base leading-none font-medium
                   focus:outline-none dark:border-gray-200 dark:text-gray-400 dark:hover:text-gray-200 dark:bg-gray-600
                     ml-auto sm:text-xs hover:text-red-600"
                 :class="uploading ? 'disabled:bg-gray-100 text-white text-opacity-50' : 'bg-gray-100'"
-                :title="t('Delete')"
-                :disabled="uploading"
-                @click="remove(entry)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                :title="t('Delete')" :disabled="uploading" @click="remove(entry)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
               </button>
             </div>
 
             <div class="py-2" v-if="!queue.length">{{ t('No files selected!') }}</div>
           </div>
-<!-- No need this ? -->
-          <message v-if="message.length" @hidden="message=''" error>{{ message }}</message>
+          <!-- No need this ? -->
+          <message v-if="message.length" @hidden="message = ''" error>{{ message }}</message>
         </div>
       </div>
     </div>
@@ -84,7 +85,8 @@
         :class="uploading ? 'bg-blue-200 hover:bg-blue-200 dark:bg-gray-700/50 dark:hover:bg-gray-700/50 dark:text-gray-500' : 'bg-blue-600 hover:bg-blue-700 dark:bg-gray-700 dark:hover:bg-gray-500'">
         {{ t('Upload') }}
       </button>
-      <button type="button" class="vf-btn vf-btn-secondary" v-if="uploading" @click.prevent="cancel">{{ t('Cancel') }}</button>
+      <button type="button" class="vf-btn vf-btn-secondary" v-if="uploading" @click.prevent="cancel">{{ t('Cancel')
+      }}</button>
       <button type="button" class="vf-btn vf-btn-secondary" v-else @click.prevent="close">{{ t('Close') }}</button>
     </template>
   </v-f-modal-layout>
@@ -106,7 +108,7 @@ import { parse } from '../../utils/filesize.js';
 import title_shorten from "../../utils/title_shorten.js";
 
 const app = inject('ServiceContainer');
-const {t} = app.i18n;
+const { t } = app.i18n;
 
 const uppyLocale = t("uppy");
 
@@ -197,7 +199,7 @@ function getClassNameForEntry(entry) {
   }
 }
 
-const getIconForEntry = (entry) =>{
+const getIconForEntry = (entry) => {
   switch (entry.status) {
     case QUEUE_ENTRY_STATUS.DONE:
       return '✓'
@@ -349,6 +351,7 @@ onMounted(async () => {
       }
       return new Error(message);
     },
+    ...app.requester.config.xhrOptions
   });
   uppy.on('restriction-failed', (upFile, error) => {
     //remove the restricted file.
@@ -356,9 +359,17 @@ onMounted(async () => {
     remove(entry)
     message.value = error.message;
   });
-  uppy.on('upload', () => {
+  uppy.on('upload', async () => {
     const reqParams = buildReqParams();
     uppy.setMeta({ ...reqParams.body });
+
+    if (app.requester.config.xhrOptions.transformUploadFile) {
+      uppy.getFiles().forEach(f => {
+        console.log(f)
+        uppy.setFileState(f.id, app.requester.config.xhrOptions.transformUploadFile(file, reqParams))
+      })
+    }
+
     const xhrPlugin = uppy.getPlugin('XHRUpload');
     xhrPlugin.opts.method = reqParams.method;
     xhrPlugin.opts.endpoint = reqParams.url + '?' + new URLSearchParams(reqParams.params);
@@ -379,7 +390,7 @@ onMounted(async () => {
     const p = Math.floor(progress.bytesUploaded / progress.bytesTotal * 100);
     queue.value[findQueueEntryIndexById(upFile.id)].percent = `${p}%`;
   });
-  uppy.on('upload-success',(upFile) => {
+  uppy.on('upload-success', (upFile) => {
     const entry = queue.value[findQueueEntryIndexById(upFile.id)];
     entry.status = QUEUE_ENTRY_STATUS.DONE;
     entry.statusName = t('Done');
